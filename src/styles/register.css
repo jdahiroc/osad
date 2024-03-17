@@ -1,0 +1,155 @@
+
+/* 
+Register.jsx 
+*/
+.register-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 5em;
+    height: 700px;
+    width: auto;
+  }
+  
+  /* 
+  This is located top of Login Button 
+  */
+  
+  .register-section .login-container {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 2em;
+  }
+  
+  .register-section .login-container span a {
+    margin-left: 5px;
+    list-style: none;
+    text-decoration: none;
+  }
+  
+  .register-section .login-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* image container */
+  
+  .img-container-register {
+    display: inline-flex;
+    justify-content: center;
+  }
+  
+  .h1-container-signup {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 2.5em;
+  }
+  .h1-container-signup h1 {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+  }
+  
+  /* Forms-register */
+  .form-container-register {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1em;
+  }
+  
+  .form-container-register label {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 15px;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+  }
+  
+  .form-container-register input {
+    width: 360px;
+    height: 37px;
+    border-radius: 8px;
+    padding-left: 1em;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 15px;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+  }
+  
+  .form-container-register button {
+    display: flex;
+    background-color: #00ba34;
+    color: #ffffff;
+    height: 52px;
+    width: 166px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 2.2em;
+    padding-right: 2em;
+    margin-top: 1.5em;
+    margin-left: 4.8em;
+    margin-bottom: 1.5em;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-size: 20px;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+  }
+  
+  .instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #535353;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+  }
+  
+  .instructions > svg {
+    margin-right: 0.25rem;
+  }
+  
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+  }
+  
+  .invalid {
+    color: red;
+    margin-left: 0.25rem;
+  }
+  
+  .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .line {
+    display: inline-block;
+  }
+  
+  
+  

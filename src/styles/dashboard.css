@@ -1,0 +1,274 @@
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling for sidebar */
+.sidebar {
+  background-color: #ed008c;
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  left: 0; /* Initially positioned at the left edge of the screen */
+  top: 0;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateX(-100%); /* Move sidebar off-screen to the left */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.sidebar.show-sidebar {
+  transform: translateX(0); /* Move sidebar back into view */
+  padding: 5px;
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 5px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  margin-bottom: 5px;
+  margin-left: 25px;
+}
+#nav-search-icon {
+  margin-left: 28px;
+}
+
+/* Basic styling for header */
+header {
+  background-color: #ed3edc;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Styling for header buttons */
+.header-buttons {
+  display: flex;
+}
+
+.logout-button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+}
+
+/* Styling for secondary header buttons */
+.header-buttons-secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.uic-main-button {
+  background-color: #ec6cb7;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 300px;
+}
+
+.uic-annex-button {
+  background-color: #d9d9d9;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px; /* Adjust padding as needed */
+  margin-right: 925px; /* Move the "UIC-ANNEX" button to the left */
+}
+
+.search-button {
+  background-color: #d9d9d9;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-right: 300px; /* Pushes the button to the right */
+}
+
+.centered-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center items horizontally and vertically */
+  flex-direction: column; /* Display items vertically */
+}
+
+.floor-section {
+  margin: 20px;
+  text-align: center;
+}
+
+.floor-section h2 {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.5em;
+}
+
+.booking-container {
+  background-color: #f8dbed;
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 20px; /* 6 times larger */
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.button-grid button {
+  padding: 30px; /* 6 times larger */
+}
+
+.room-button {
+  border: none;
+  border-radius: 10px;
+}
+
+/* Modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  overflow-y: auto; /* Enable scroll if needed */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  max-width: 1200px;
+  transform: translateY(-150%);
+}
+
+/* Modal content
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+} */
+
+.modal-header h2 {
+  margin-top: 0;
+}
+
+.modal-body {
+  padding-top: 20px;
+}
+
+.room-details {
+  margin-bottom: 20px;
+}
+
+.room-info {
+  margin-bottom: 10px;
+}
+
+.room-info label {
+  font-weight: bold;
+}
+
+.book-now-section {
+  text-align: center;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal header */
+.modal-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Info item */
+.info-item {
+  margin-bottom: 15px;
+}
+
+/* Available time list */
+.available-time-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.available-time-item {
+  margin-top: 0.5em;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.available-time-item:hover {
+  background-color: #e0e0e0;
+}
+
+/* Styling for footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}

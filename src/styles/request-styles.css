@@ -1,0 +1,299 @@
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling for sidebar */
+.sidebar {
+  background-color: #ed008c;
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  left: 0; /* Initially positioned at the left edge of the screen */
+  top: 0;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateX(-100%); /* Move sidebar off-screen to the left */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.sidebar.show-sidebar {
+  transform: translateX(0); /* Move sidebar back into view */
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 2px;
+}
+
+.sidebar ul li p {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5em;
+}
+
+.nav-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  margin-bottom: 5px; /* Adjust spacing between image and text */
+}
+
+/* Basic styling for sidebar */
+.sidebar {
+  background-color: #ed008c;
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  left: 0; /* Initially positioned at the left edge of the screen */
+  top: 0;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateX(-100%); /* Move sidebar off-screen to the left */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.sidebar.show-sidebar {
+  transform: translateX(0); /* Move sidebar back into view */
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  margin-bottom: 5px; /* Adjust spacing between image and text */
+}
+
+/* Basic styling for header */
+header {
+  background-color: #ed3edc;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Styling for header buttons */
+.header-buttons {
+  display: flex;
+}
+
+.user-button {
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+}
+
+.logout-button {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 10px;
+}
+
+/* Styling for secondary header buttons */
+.header-buttons-secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.uic-main-button {
+  background-color: #ec6cb7;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 300px;
+}
+
+.centered-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center items horizontally and vertically */
+  flex-direction: column; /* Display items vertically */
+}
+
+.floor-section {
+  margin: 20px;
+  text-align: center;
+}
+
+/* Modal container */
+.modal {
+  display: none; /* Hide modal by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  overflow: auto;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Optional: Centers vertically on the page */
+}
+
+.booking-form {
+  width: 400px; /* Adjust width as needed */
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8dbed;
+}
+
+.info-container {
+  margin-bottom: 20px;
+}
+
+.info-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.info-container input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.reason-container {
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.reason-container h2 {
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.reason-container .form-group {
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+#booking-reason {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #00a50b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Styling for footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
