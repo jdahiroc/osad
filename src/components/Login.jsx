@@ -1,10 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
+
 import uicLogo from "../assets/logo.png";
 
 const Login = () => {
-  const [user, setUser] = useState("");
+  const navigate = useNavigate();
+  const { signIn } = UserAuth();
+
+  // const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrMsg("");
+    try {
+      await signIn(email, password);
+      navigate("/dashboard");
+    } catch (e) {
+      setErrMsg(e.message);
+      console.log(e.message);
+    }
+  };
 
   return (
     <>
@@ -15,20 +34,24 @@ const Login = () => {
         <div className="h1-container-login">
           <h1>LOG IN</h1>
         </div>
+        <div className="error-container-register">
+          {/* error message */}
+          <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+            {errMsg}
+          </p>
+        </div>
         <div className="form-container-login">
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="studentId" className="labelstdID">
-              Student ID
+              Student Email
             </label>
             <br />
             <input
               type="text"
               id="studentId"
-              placeholder="Enter your ID here"
-              // ref={userRef}
+              placeholder="Enter your email here"
               autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <br />
             <label htmlFor="password" className="labelstdPWD">
@@ -41,13 +64,10 @@ const Login = () => {
               placeholder="Enter your password here"
               // ref={userRef}
               onChange={(e) => setPassword(e.target.value)}
-              value={password}
               required
             />
             <br />
-            <Link to="/dashboard">
-              <button>Login</button>
-            </Link>
+            <button>Login</button>
           </form>
         </div>
         <p className="signup-container">
