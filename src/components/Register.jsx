@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 import uicLogo from "../assets/logo.png";
+import "../styles/register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -104,7 +105,7 @@ const Register = () => {
               <br />
               <span className="line">
                 {/* put router link here */}
-                <Link to="/login"> Log in</Link>
+                <Link to="/"> Log in</Link>
               </span>
             </p>
             <button>Sign Up</button>

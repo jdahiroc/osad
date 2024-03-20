@@ -4,6 +4,7 @@ import { useState } from "react";
 import { UserAuth } from '../context/AuthContext';
 
 
+import "../styles/dashboard.css";
 import uiclogo from "../assets/uicLogo.png";
 import browseicon from "../assets/browse-icon.png";
 import bookicon from "../assets/book-icon.png";

@@ -1,6 +1,8 @@
 // import React from 'react'
 import { Link } from "react-router-dom";
 import { useState } from "react";
+
+import "../styles/request-styles.css";
 import uiclogo from "../assets/uicLogo.png";
 import browseicon from "../assets/browse-icon.png";
 import bookicon from "../assets/book-icon.png";

@@ -1,8 +1,3 @@
-// CSS Styles imports
-import "../src/styles/login.css";
-import "../src/styles/register.css";
-import "../src/styles/dashboard.css";
-import "../src/styles/request-styles.css";
 
 // Routers
 import { Routes, Route } from "react-router-dom";

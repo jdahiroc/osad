@@ -1,111 +1,110 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Login.jsx */
-  .login-section {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 5em;
-    height: 500px;
-    width: auto;
-  }
-  
-  /* 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Login.jsx */
+.login-section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 2.5em;
+  height: auto;
+  width: auto;
+}
+
+/* 
   This is located top of Login Button 
   */
-  
-  .login-section .signup-container {
-    display: inline-flex;
-    justify-content: center;
-  }
-  
-  .login-section .signup-container span a {
-    margin-left: 5px;
-    list-style: none;
-    text-decoration: none;
-  }
-  
-  .login-section .signup-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .img-container-login {
-    display: inline-flex;
-    justify-content: center;
-  }
-  
-  .uic-logo {
-    height: 150px;
-    width: 150px;
-  }
-  
-  .h1-container-login {
-    display: inline-flex;
-    justify-content: center;
-    margin-top: 2.5em;
-  }
-  .h1-container-login h1 {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
-    font-variation-settings: "slnt" 0;
-  }
-  
-  /* Forms-login */
-  .form-container-login {
-    display: flex;
-    justify-content: center;
-    margin-top: 2em;
-  }
-  
-  .form-container-login label {
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 15px;
-    font-style: normal;
-    font-variation-settings: "slnt" 0;
-  }
-  
-  .form-container-login input {
-    width: 360px;
-    height: 40px;
-    border-radius: 8px;
-    padding-left: 1em;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 15px;
-    font-style: normal;
-    font-variation-settings: "slnt" 0;
-  }
-  
-  .form-container-login button {
-    background-color: #00ba34;
-    color: #ffffff;
-    height: 52px;
-    width: 166px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: 2em;
-    padding-right: 2em;
-    margin-top: 2.5em;
-    margin-left: 5em;
-    margin-bottom: 1.5em;
-    border-radius: 10px;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-size: 20px;
-    font-style: normal;
-    font-variation-settings: "slnt" 0;
-  }
+
+.login-section .signup-container {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.login-section .signup-container span a {
+  margin-left: 5px;
+  list-style: none;
+  text-decoration: none;
+}
+
+.login-section .signup-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.img-container-login {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.uic-logo {
+  height: 150px;
+  width: 150px;
+}
+
+.h1-container-login {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 2.5em;
+}
+.h1-container-login h1 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+/* Forms-login */
+.form-container-login {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5em;
+}
+
+.form-container-login label {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 15px;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.form-container-login input {
+  width: 360px;
+  height: 40px;
+  border-radius: 8px;
+  padding-left: 1em;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 15px;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.form-container-login button {
+  background-color: #00ba34;
+  color: #ffffff;
+  height: 52px;
+  width: 166px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  margin-top: 1.7em;
+  margin-left: 5em;
+  margin-bottom: 1.5em;
+  border-radius: 10px;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-size: 20px;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}

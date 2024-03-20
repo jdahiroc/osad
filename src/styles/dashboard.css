@@ -180,21 +180,22 @@ header {
   z-index: 1000;
   left: 0;
   top: 0;
-  overflow-y: auto; /* Enable scroll if needed */
+  overflow-y: hidden; /* Enable scroll if needed */
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  max-width: 1200px;
+  max-width: 900px;
+  max-height: 750px;
   transform: translateY(-150%);
 }
 
-/* Modal content
+/* Modal content */
 .modal-content {
   background-color: #fefefe;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: absolute;
-} */
+}
 
 .modal-header h2 {
   margin-top: 0;

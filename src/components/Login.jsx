@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 import uicLogo from "../assets/logo.png";
+import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Login = () => {
         <div className="h1-container-login">
           <h1>LOG IN</h1>
         </div>
-        <div className="error-container-register">
+        <div className="error-container-login">
           {/* error message */}
           <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
