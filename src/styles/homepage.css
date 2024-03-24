@@ -1,0 +1,234 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap");
+
+/*---------- Navigation ----------*/
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #fff;
+}
+
+.logo img {
+  width: 80px;
+  height: auto;
+  padding-left: 0px;
+}
+.line img {
+  height: auto;
+  margin-right: 800px;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu ul li {
+  display: inline;
+  margin-left: 5px;
+}
+
+.menu ul li a {
+  color: #000000;
+  text-decoration: none;
+  margin-top: 50px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  margin-left: 20px;
+}
+
+.menu ul li a:hover {
+  color: #ccc;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.wide-image {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wide-image img {
+  height: auto;
+  width: 1350px;
+}
+
+/*---------- Contents ----------*/
+.content-container {
+  display: flex;
+  background-color: #e6e6e6;
+  width: 1350px;
+  height: 900px; /*height of the container*/
+  margin-top: 1.5em;
+  margin-left: 3em;
+  border-radius: 30px;
+  overflow-y: auto;
+}
+
+/* container of filter icon*/
+.filter-icon {
+  display: inline-flex;
+  margin-left: 5.5em;
+  padding-top: 2em;
+}
+
+.filter-icon img {
+  width: 25px;
+}
+
+/* container of campus navigation*/
+.campus-navigation {
+  display: inline-flex;
+  padding-top: 2em;
+}
+
+.campus-navigation a {
+  margin-left: 2em;
+  text-decoration: none;
+  color: #000000;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+}
+
+.underline {
+  /*currently underlines the main campus*/
+  position: absolute;
+  right: 78%;
+  width: 133px;
+  height: 2px;
+  background-color: #fa7e93;
+  margin-top: 1.5em;
+}
+
+/*----------First Floor------------- */
+.first-floor-container {
+  position: absolute;
+  margin-top: 7.5em;
+  margin-left: 5.5em;
+}
+
+.first-floor-header {
+  display: flex;
+}
+
+.first-floor-header img {
+  /*sideline beside h3*/
+  height: 30px;
+  margin-top: 1px;
+  margin-right: 0.5em;
+}
+
+.first-floor-header h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+/* First Floor Buttons */
+.first-floor-buttons-container {
+  /* manipulates the container*/
+  background-color: #ffffff;
+  width: 1170px;
+  height: auto;
+  margin-top: 1em;
+  padding: 25px 0;
+  overflow-y: auto; /*This will make the container scrollable if too many items*/
+  border-radius: 15px;
+}
+
+.first-floor-button1 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 0.2em;
+  gap: 35px;
+}
+
+.first-floor-button1 button {
+  flex: 0 0 calc((70% - 20px) / 3);
+  width: 100%;
+  height: 50px;
+  padding: 8px 12px; /* Adjust padding to center the content vertically */
+  background-color: #424141;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+/*----------Second Floor------------- */
+.second-floor-container {
+  position: absolute;
+  margin-top: 30em;
+  margin-left: 5.5em;
+}
+
+.second-floor-header {
+  display: flex;
+}
+
+.second-floor-header img {
+  /*sideline beside h3*/
+  height: 30px;
+  margin-top: 1px;
+  margin-right: 0.5em;
+}
+
+.second-floor-header h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+/* Second Floor Buttons */
+.second-floor-buttons-container {
+  /* manipulates the container*/
+  background-color: #ffffff;
+  width: 1170px;
+  height: auto;
+  margin-top: 1em;
+  padding: 25px 0;
+  overflow-y: auto; /*This will make the container scrollable if too many items*/
+  border-radius: 15px;
+}
+
+.second-floor-button1 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 0.2em;
+  gap: 35px;
+}
+
+.second-floor-button1 button {
+  flex: 0 0 calc((70% - 20px) / 3);
+  width: 100%;
+  height: 50px;
+  padding: 8px 12px; /* Adjust padding to center the content vertically */
+  background-color: #424141;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}

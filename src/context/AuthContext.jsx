@@ -14,12 +14,12 @@ const UserContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  //signin function
+  //sign up function
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  //sign function
+  //sign in function
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)
   } 
