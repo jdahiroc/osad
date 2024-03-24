@@ -21,7 +21,7 @@ const Register = () => {
     setErrMsg("");
     try {
       await createUser(email, password);
-      navigate("/dashboard");
+      navigate("/home");
     } catch {
       setErrMsg(e.message);
       console.log(e.message);

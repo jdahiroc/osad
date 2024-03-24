@@ -4,7 +4,6 @@ import { AuthContextProvider } from "./context/AuthContext";
 //components
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
 import Homepage from "./components/Homepage";
 import RequestForms from "./components/RequestForms";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -19,14 +18,13 @@ function App() {
           <Route path="/" index element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/dashboard"
+            path="/home"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Homepage />
               </ProtectedRoute>
             }
-          />
-          <Route path="/h/" element={<Homepage />}></Route>
+          ></Route>
           <Route
             path="/requestforms"
             element={
