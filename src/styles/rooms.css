@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap");
+
+/*---------- Navigation ----------*/
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #fff;
+}
+
+.logo img {
+  width: 65px;
+  height: auto;
+  padding-left: 0px;
+}
+.line img {
+  height: 55px;
+  margin-right: 800px;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu ul li {
+  display: inline;
+  margin-left: 5px;
+}
+
+.menu ul li a {
+  color: #000000;
+  text-decoration: none;
+  margin-top: 50px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  margin-left: 20px;
+}
+
+.menu ul li a:hover {
+  color: #ccc;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.wide-image {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wide-image img {
+  height: auto;
+  width: 1350px;
+}
+
+/* Banner UIC */
+.banner-container {
+  background-color: #ff5471;
+  width: auto;
+  height: 160px;
+}
+
+.uicBanner-img {
+  width: 590px;
+  height: auto;
+  position: absolute;
+}
+
+.text-banner-container {
+  display: flex;
+  margin-left: 1em;
+}
+
+.sideLine-img {
+  margin-right: 0.5em;
+  margin-top: 6.5em;
+  z-index: 1; /*makes sure that it will display on top*/
+}
+
+.text-banner-container h3 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  z-index: 1;
+  margin-top: 4em;
+}
+
+/* Booking Information Contents */
+.bookContent-container {
+  padding-top: 1.5em;
+  margin-left: 7em;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* left section */
+.bookContent-header-container h3 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+}
+
+.bookContent-header-container .bookContent-underline {
+  width: 90%;
+  height: 3px;
+  background-color: #fa7e93;
+  margin-top: 0.5em;
+}
+
+.room-info {
+  margin-top: 1.5em;
+}
+
+.room-info h6 {
+  margin-top: 1em;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.room-info span {
+  padding-left: 0.3em;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+.dateAndTime-container {
+  margin-top: 4.5em;
+}
+
+.dateAndTime-container p {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.dateAndTime-container .selectDateAndTime-container {
+  height: 100px;
+  max-width: 380px;
+  width: auto;
+  margin-bottom: 1.5em;
+}
+
+.dateAndTime-container .selectDateAndTime-container input {
+  padding: 5px 5px;
+  margin-right: 1em;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+/* right section */
+.bookerName-container {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+}
+
+.bookerName-container h6 {
+  margin-top: 1em;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.bookerName-container span {
+  padding-left: 0.3em;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+.attachment-container {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  width: auto;
+}
+.attachment-container p {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+.attachment-container input {
+  padding: 5px;
+  font-family: "DM Sans", sans-serif;
+  margin-left: 2em;
+}
+
+/* Buttons in Booking */
+.bookContent-container .bookingButtons-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: 58.5%;
+  top: 90%;
+}
+
+.bookContent-container .bookingButtons-container button {
+  margin-left: 1em;
+  padding: 10px 60px;
+  border: none;
+  background-color: #ff4b69;
+  color: #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.bookContent-container .bookingButtons-container button:hover {
+  background-color: #e92c2c;
+}

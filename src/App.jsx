@@ -1,12 +1,18 @@
 // Routers
 import { Routes, Route } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
+
 //components
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Homepage from "./components/Homepage";
-import RequestForms from "./components/RequestForms";
+import Rooms from "./components/Rooms";
+// (ADMIN Components)
+import RequestedRoom from "./components/Requestedroom";
+import History from "./components/History";
+
 import ProtectedRoute from "./components/ProtectedRoute";
+
 //bootstrap link
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -15,7 +21,7 @@ function App() {
     <>
       <AuthContextProvider>
         <Routes>
-          <Route path="/login" index element={<Login />} />
+          <Route path="/" index element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
             path="/home"
@@ -26,10 +32,28 @@ function App() {
             }
           ></Route>
           <Route
-            path="/requestforms"
+            path="/rooms"
             element={
               <ProtectedRoute>
-                <RequestForms />
+                <Rooms />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ADMIN ROUTES */}
+          <Route
+            path="/a/request"
+            element={
+              <ProtectedRoute>
+                <RequestedRoom />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/a/history"
+            element={
+              <ProtectedRoute>
+                <History />
               </ProtectedRoute>
             }
           />

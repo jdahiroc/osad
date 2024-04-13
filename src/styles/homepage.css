@@ -31,17 +31,18 @@
   margin-left: 5px;
 }
 
-.menu ul li a {
+.menu ul li span {
   color: #000000;
   text-decoration: none;
   margin-top: 50px;
   font-weight: 600;
   font-family: "Inter", sans-serif;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .menu ul li a:hover {
   color: #ccc;
+  cursor: pointer;
 }
 
 .profile-icon {
@@ -60,16 +61,133 @@
   width: 1350px;
 }
 
+/* Room Modal / Pop up */
+/* this one for rooms modal overlay */
+.overlay {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #f4f4f4;
+  backdrop-filter: transparent;
+  max-width: 350px;
+  max-height: 1000px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: none;
+}
+
+/* Profile Modal / Pop up */
+/* this one for profile icon modal ovelay */
+.overlay-profileIcon {
+  display: none;
+  position: absolute;
+  left: 74%;
+  top: 10%;
+  border-radius: 20px;
+  background: #f4f4f4;
+  backdrop-filter: transparent;
+  max-width: 350px;
+  max-height: 480px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: none;
+}
+
+.show {
+  display: block;
+}
+
+.close-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 25px;
+}
+
+.profile-closebtn {
+  background-color: #f4f4f4;
+  color: #898989;
+  border: none;
+  font-family: "DM Sans", sans-serif;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.profile-closebtn:hover {
+  color: #000000;
+}
+
+.profileIcon-modal-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileIcon-modal-container .profile-icon-container {
+  display: flex;
+  justify-content: center;
+}
+
+.profileIcon-modal-container .profile-icon-container img {
+  height: 84px;
+  width: 84px;
+}
+
+.profileIcon-modal-container .userName-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.profileIcon-modal-container .userName-container h3 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+}
+
+.profileIcon-modal-container .email-container {
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+.profileIcon-modal-container .email-container p {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.profileIcon-modal-container .logout-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 160px;
+}
+
+.profileIcon-modal-container .logout-container button {
+  padding: 10px 65px;
+  border-radius: 25px;
+  border: none;
+  background-color: #ff4b69;
+  color: #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+}
+
+.profileIcon-modal-container .logout-container button:hover {
+  background-color: #e92c2c;
+}
+
 /*---------- Contents ----------*/
 .content-container {
   display: flex;
   background-color: #e6e6e6;
   width: 1350px;
-  height: 900px; /*height of the container*/
+  height: 800px; /*height of the container*/
   margin-top: 1.5em;
   margin-left: 3em;
   border-radius: 30px;
-  overflow-y: auto;
+  overflow: none;
 }
 
 /* container of filter icon*/
@@ -100,7 +218,7 @@
 .underline {
   /*currently underlines the main campus*/
   position: absolute;
-  right: 78%;
+  right: 75.5%;
   width: 133px;
   height: 2px;
   background-color: #fa7e93;
@@ -231,4 +349,122 @@
   font-weight: bold;
   font-style: normal;
   font-variation-settings: "slnt" 0;
+}
+
+/* ------------- MODAL ------------- */
+/* Modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000;
+  margin-left: 290px;
+  left: 0;
+  top: 0;
+  overflow-y: hidden; /* Enable scroll if needed */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  max-width: 900px;
+  max-height: 650px;
+  transform: translateY(-115%);
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+}
+
+.modal-header img {
+  margin-top: 5em;
+  margin-left: 4em;
+  position: absolute;
+}
+
+.modal-header h2 {
+  margin-left: 2.5em;
+  margin-top: 2.7em;
+  font-family: "Duru Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.modal-body {
+  padding-top: 20px;
+}
+
+/* ROOM NAME label & p */
+.modal-body .info-item label {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin-left: 4.5em;
+}
+.modal-body .info-item p {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "DM Sans", sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  margin-left: 2em;
+}
+
+.modal-body .info-item span {
+  font-family: "DM Sans", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 4em;
+}
+
+.modal-body .modal-footer button {
+  background-color: #ff4b69;
+  color: #ffffff;
+  font-size: 22px;
+  font-style: normal;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 90px;
+  margin: 1.5em 2.5em;
+  font-family: "DM Sans", sans-serif;
+  font-weight: bold;
+}
+
+.room-info {
+  margin-bottom: 10px;
+}
+
+.room-info label {
+  font-weight: bold;
+}
+
+.room-info p .book-now-section {
+  text-align: center;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal header */
+.modal-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Info item */
+.info-item {
+  margin-bottom: 15px;
 }

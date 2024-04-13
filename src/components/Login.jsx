@@ -23,7 +23,7 @@ const Login = () => {
     } catch (e) {
       console.log(e.message);
     }
-    return setErrMsg("Something went wrong!");
+    return setErrMsg("Invalid Credentials. Try again!" );
   };
 
   return (
@@ -34,6 +34,7 @@ const Login = () => {
           {errMsg}
         </p>
       </div>
+      {/* Login Section */}
       <div className="login-section">
         <div className="img-container-login">
           <img src={uicLogo} alt="Uic logo" className="uic-logo" />

@@ -4,6 +4,28 @@
   box-sizing: border-box;
 }
 
+/* Error Message */
+.errMessage {
+  background-color: #ed008c;
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  left: 0; /* Initially positioned at the left edge of the screen */
+  top: 0;
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+  transform: translateX(-100%); /* Move sidebar off-screen to the left */
+}
+.close-errMsg.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+}
+
 /* Login.jsx */
 .login-section {
   display: flex;

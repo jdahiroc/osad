@@ -8,6 +8,7 @@ import "../styles/register.css";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const { createUser } = UserAuth();
@@ -20,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     setErrMsg("");
     try {
-      await createUser(email, password);
+      await createUser(email, password, displayName);
       navigate("/home");
     } catch {
       setErrMsg(e.message);
@@ -54,6 +55,7 @@ const Register = () => {
               id="fullname"
               placeholder="Enter your full name here"
               autoComplete="off"
+              onChange={(e) => setDisplayName(e.target.value)}
               required
             />
             <br />
