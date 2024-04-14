@@ -225,73 +225,10 @@
   margin-top: 1.5em;
 }
 
-/*----------First Floor------------- */
-.first-floor-container {
-  position: absolute;
-  margin-top: 7.5em;
-  margin-left: 5.5em;
-}
-
-.first-floor-header {
-  display: flex;
-}
-
-.first-floor-header img {
-  /*sideline beside h3*/
-  height: 30px;
-  margin-top: 1px;
-  margin-right: 0.5em;
-}
-
-.first-floor-header h3 {
-  font-family: "Inter", sans-serif;
-  font-size: 25px;
-  font-weight: 600;
-}
-
-/* First Floor Buttons */
-.first-floor-buttons-container {
-  /* manipulates the container*/
-  background-color: #ffffff;
-  width: 1170px;
-  height: auto;
-  margin-top: 1em;
-  padding: 25px 0;
-  overflow-y: auto; /*This will make the container scrollable if too many items*/
-  border-radius: 15px;
-}
-
-.first-floor-button1 {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin-top: 0.2em;
-  gap: 35px;
-}
-
-.first-floor-button1 button {
-  flex: 0 0 calc((70% - 20px) / 3);
-  width: 100%;
-  height: 50px;
-  padding: 8px 12px; /* Adjust padding to center the content vertically */
-  background-color: #424141;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Inter", sans-serif;
-  font-size: 25px;
-  font-optical-sizing: auto;
-  font-weight: bold;
-  font-style: normal;
-  font-variation-settings: "slnt" 0;
-}
-
 /*----------Second Floor------------- */
 .second-floor-container {
   position: absolute;
-  margin-top: 30em;
+  margin-top: 7.5em;
   margin-left: 5.5em;
 }
 
@@ -312,9 +249,11 @@
   font-weight: 600;
 }
 
-/* Second Floor Buttons */
+/* second Floor Buttons */
 .second-floor-buttons-container {
   /* manipulates the container*/
+  display: inline-flex;
+  justify-content: center;
   background-color: #ffffff;
   width: 1170px;
   height: auto;
@@ -325,10 +264,8 @@
 }
 
 .second-floor-button1 {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
+  margin-right: 1.5em;
   margin-top: 0.2em;
   gap: 35px;
 }
@@ -337,7 +274,7 @@
   flex: 0 0 calc((70% - 20px) / 3);
   width: 100%;
   height: 50px;
-  padding: 8px 12px; /* Adjust padding to center the content vertically */
+  padding: 8px 40px;
   background-color: #424141;
   color: #fff;
   border: none;
@@ -345,10 +282,68 @@
   cursor: pointer;
   font-family: "Inter", sans-serif;
   font-size: 25px;
-  font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
-  font-variation-settings: "slnt" 0;
+}
+
+/*----------Third Floor------------- */
+.third-floor-container {
+  position: absolute;
+  margin-top: 30em;
+  margin-left: 5.5em;
+}
+
+.third-floor-header {
+  display: flex;
+}
+
+.third-floor-header img {
+  /*sideline beside h3*/
+  height: 30px;
+  margin-top: 1px;
+  margin-right: 0.5em;
+}
+
+.third-floor-header h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+/* third Floor Buttons */
+.third-floor-buttons-container {
+  display: inline-flex;
+  justify-content: center;
+  background-color: #ffffff;
+  width: 1170px;
+  height: auto;
+  margin-top: 1em;
+  padding: 25px 0;
+  overflow-y: auto; /*This will make the container scrollable if too many items*/
+  border-radius: 15px;
+}
+
+.third-floor-button1 {
+  flex-direction: column;
+  margin-right: 1.5em;
+  margin-top: 0.2em;
+  gap: 35px;
+}
+
+.third-floor-button1 button {
+  flex: 0 0 calc((70% - 20px) / 3);
+  width: 100%;
+  height: 50px;
+  padding: 8px 40px;
+  background-color: #424141;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  font-style: normal;
 }
 
 /* ------------- MODAL ------------- */

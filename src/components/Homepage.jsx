@@ -1,34 +1,30 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 import uicLogo from "../assets/uic-logo.png";
 import verticalLine from "../assets/vertical-line.png";
 import profileIcon from "../assets/profile-icon-admin2.png";
 import sidelineHeader from "../assets/sideline-firstfloor.png";
 import filterIcon from "../assets/filter-icon.png";
 import schoolBG from "../assets/school-bg.png";
-
-//CSS
 import "../styles/homepage.css";
-
-//User Authentication
 import { UserAuth } from "../context/AuthContext";
 
-// Reach Hooks
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
 const Homepage = () => {
-  // Modal Function
   const [modal, setModal] = useState(false);
+  const [rooms, setRoom] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [profileIcons, setProfileIcon] = useState(false);
+
   const toggleModal = () => {
     setModal(!modal);
   };
 
-  // profile icon modal
-  const [profileIcons, setProfileIcon] = useState(false);
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
 
-  //Logout Function
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
@@ -42,9 +38,24 @@ const Homepage = () => {
     }
   };
 
+  const getRoom = async () => {
+    const querySnapshot = await getDocs(collection(db, "mainCampus"));
+    const roomsData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setRoom(roomsData);
+  };
+
+  
+
+  useEffect(() => {
+    getRoom();
+  }, []);
+
   return (
     <>
-      {/* <!-- NAVIGATION --> */}
+      {/* Navigation */}
       <div className="navigation">
         <div className="logo">
           <img src={uicLogo} alt="UIC Logo" />
@@ -98,13 +109,14 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* <!-- UIC IMAGE --> */}
+      {/* UIC IMAGE */}
       <div className="wide-image">
         <img src={schoolBG} alt="School Background" />
       </div>
 
       {/* CONTENTS */}
       <div className="content-container">
+        {/* Campus Navigation */}
         <div className="campus-navigation-container">
           <div className="filter-icon">
             <a href="#">
@@ -120,115 +132,63 @@ const Homepage = () => {
           </div>
         </div>
 
-        {/* First Floor */}
-        <div className="first-floor-container">
-          <div className="first-floor-header">
-            <img src={sidelineHeader} />
-            <h3>FIRST FLOOR</h3>
-          </div>
-          {/* First Floor Buttons */}
-          <div className="first-floor-buttons-container">
-            <div className="first-floor-button1">
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 101
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 102
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 103
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 104
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 105
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 106
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 107
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 108
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                ROOM 109
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* Second Floor */}
         <div className="second-floor-container">
           <div className="second-floor-header">
-            <img src={sidelineHeader} />
+            <img src={sidelineHeader} alt="Sideline Header" />
             <h3>SECOND FLOOR</h3>
           </div>
-          {/* second Floor Buttons */}
           <div className="second-floor-buttons-container">
-            <div className="second-floor-button1">
-              <button onClick={toggleModal} className="btn-modal">
-                LAB 201
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                LAB 202
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                LAB 203
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                LAB 204
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                LAB 205
-              </button>
-              <button onClick={toggleModal} className="btn-modal">
-                LAB IOT
-              </button>
-            </div>
+            {rooms ? (
+              rooms.map((room) => (
+                <div className="second-floor-button1" key={room.id}>
+                  <button
+                    onClick={() => {
+                      setSelectedRoom(room);
+                      toggleModal();
+                    }}
+                    className="btn-modal"
+                  >
+                    {room.roomName}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <h2>LOADING...</h2>
+            )}
           </div>
         </div>
-      </div>
-      {/* Room Information Modal */}
-      {/* BOOTSTRAP being used */}
-      <div id="modal" className={`overlay ${modal ? "show" : ""}`}>
-        <span className="close" onClick={toggleModal}>
-          &times;
-        </span>
-        {/* MODAL HEADER */}
-        <div className="modal-header">
-          <img src={sidelineHeader} />
-          <h2>ROOM INFORMATION</h2>
-        </div>
-        <div className="modal-body">
-          <div className="container-fluid">
-            <div className="row">
-              {/* ROOM NAME */}
-              <div className="info-item col-md-4">
-                <label htmlFor="room-name">Room Name:</label>
-                <p>ROOM 201</p>
+
+        {/* Room Information Modal */}
+        <div id="modal" className={`overlay ${modal ? "show" : ""}`}>
+          <span className="close" onClick={toggleModal}>
+            &times;
+          </span>
+          <div className="modal-header">
+            <img src={sidelineHeader} alt="Sideline Header" />
+            <h2>ROOM INFORMATION</h2>
+          </div>
+          <div className="modal-body">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="info-item col-md-4">
+                  <label htmlFor="room-name">Room Name:</label>
+                  <p>{selectedRoom && selectedRoom.roomName}</p>
+                </div>
+                <div className="info-item col-md-4">
+                  <label htmlFor="room-type">Room Type:</label>
+                  <p>{selectedRoom && selectedRoom.roomType}</p>
+                </div>
+                <div className="info-item">
+                  <label htmlFor="room-location">Location:</label> <br />
+                  <span>{selectedRoom && selectedRoom.location}</span>
+                </div>
+                <div className="modal-footer">
+                  <Link to="/rooms">
+                    <button>BOOK NOW</button>
+                  </Link>
+                </div>
               </div>
-            </div>
-            {/* ROOM TYPE */}
-            <div className="info-item col-md-4">
-              <label htmlFor="room-type">Room Type:</label>
-              <p>LABORATORY ROOM</p>
-            </div>
-            {/* LOCATION */}
-            <div className="info-item">
-              <label htmlFor="room-location">Location:</label> <br />
-              <span>
-                Second Floor Right Wing Along side the Entrance Door Within the
-                hallway, Across the Campus Server Room.
-              </span>
-            </div>
-            {/* BOOK NOW */}
-            <div className="modal-footer">
-              <Link to="/rooms">
-                <button>BOOK NOW</button>
-              </Link>
             </div>
           </div>
         </div>
