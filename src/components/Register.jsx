@@ -2,13 +2,19 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
+
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
+
 import uicLogo from "../assets/logo.png";
 import "../styles/register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [schoolId, setSchoolId] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const { createUser } = UserAuth();
@@ -20,10 +26,24 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrMsg("");
+
+    const newUser = {
+      confirmPassword,
+      email,
+      fullName,
+      password,
+      schoolId,
+      createdOn: serverTimestamp()
+    };
+
+    // Add a new document with a generated id.
     try {
-      await createUser(email, password, displayName);
+      await createUser(email, password);
+      await addDoc(collection(db, "users"), {
+        ...newUser,
+      });
       navigate("/home");
-    } catch {
+    } catch (e) {
       setErrMsg(e.message);
       console.log(e.message);
     }
@@ -55,7 +75,7 @@ const Register = () => {
               id="fullname"
               placeholder="Enter your full name here"
               autoComplete="off"
-              onChange={(e) => setDisplayName(e.target.value)}
+              onChange={(e) => setFullName(e.target.value)}
               required
             />
             <br />
@@ -66,6 +86,7 @@ const Register = () => {
               id="schoolId"
               placeholder="Enter your ID here"
               autoComplete="off"
+              onChange={(e) => setSchoolId(e.target.value)}
               required
             />
             <br />
@@ -99,7 +120,7 @@ const Register = () => {
               type="password"
               id="confirm_password"
               placeholder="Enter your confirm password here"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
             <p className="login-container">
