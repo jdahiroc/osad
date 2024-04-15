@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
+// import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import uicLogo from "../assets/uic-logo.png";
 import verticalLine from "../assets/vertical-line.png";
@@ -13,6 +14,7 @@ import { UserAuth } from "../context/AuthContext";
 
 const Homepage = () => {
   const [modal, setModal] = useState(false);
+  // const [fullName, setFullName] = useState("");
   const [rooms, setRoom] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [profileIcons, setProfileIcon] = useState(false);
@@ -28,6 +30,7 @@ const Homepage = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
+  //logout function
   const handleLogout = async () => {
     try {
       await logout();
@@ -38,6 +41,15 @@ const Homepage = () => {
     }
   };
 
+  // const getFullNameUser = async () => {
+  //   const querySnapshot = await getDocs(collection(db, "users"));
+  //   const fullNames = querySnapshot.docs.map((doc) => ({
+  //     id: doc.id,
+  //     fullName: doc.data().fullName,
+  //   }));
+  //   setFullName(fullNames);
+  // };
+
   const getRoom = async () => {
     const querySnapshot = await getDocs(collection(db, "mainCampus"));
     const roomsData = querySnapshot.docs.map((doc) => ({
@@ -47,9 +59,8 @@ const Homepage = () => {
     setRoom(roomsData);
   };
 
-  
-
   useEffect(() => {
+    // getFullNameUser();
     getRoom();
   }, []);
 
@@ -95,8 +106,17 @@ const Homepage = () => {
           <div className="profile-icon-container">
             <img src={profileIcon} alt="profile-icon" />
           </div>
+          {/* {fullName ? (
+            fullName.map((userName) => (
+              <div className="userName-container" key={userName.id}>
+                <h3>{userName.fullName}</h3>
+              </div>
+            ))
+          ) : (
+            <span></span>
+          )} */}
           <div className="userName-container">
-            <h3>{user && user.displayName}</h3>
+            <h3>{user.fullName}</h3>
           </div>
           <div className="email-container">
             <p>{user && user.email}</p>
