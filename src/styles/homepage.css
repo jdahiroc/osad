@@ -161,7 +161,7 @@
 .profileIcon-modal-container .logout-container {
   display: flex;
   justify-content: center;
-  margin-top: 160px;
+  margin-top: 150px;
 }
 
 .profileIcon-modal-container .logout-container button {
@@ -258,14 +258,18 @@
   width: 1170px;
   height: auto;
   margin-top: 1em;
-  padding: 25px 0;
-  overflow-y: auto; /*This will make the container scrollable if too many items*/
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 130px;
+  padding-right: 10px;
+  overflow-y: hidden; /*This will make the container scrollable if too many items*/
+  overflow-x: auto;
   border-radius: 15px;
 }
 
 .second-floor-button1 {
   flex-direction: column;
-  margin-right: 1.5em;
+  margin-right: 0.5em;
   margin-top: 0.2em;
   gap: 35px;
 }
