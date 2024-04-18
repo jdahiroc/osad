@@ -40,6 +40,13 @@ const Rooms = () => {
       console.log(e.message);
     }
   };
+
+  // handle submit
+  // const [roomName, setRoomName] = useState("");
+  // const [roomType, setRoomType] = useState("");
+  // const [roomName, setRoomName] = useState("");
+  // const handleSubmit = async () => {};
+
   return (
     <>
       {/* <!-- NAVIGATION --> */}
@@ -112,7 +119,6 @@ const Rooms = () => {
             <h3>BOOKING INFORMATION</h3>
             <div className="bookContent-underline"></div>
           </div>
-
           {/* left section */}
           <div className="room-info">
             <h6>
