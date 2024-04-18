@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
-
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
 import uicLogo from "../assets/logo.png";
@@ -33,15 +32,20 @@ const Register = () => {
       fullName,
       password,
       schoolId,
-      createdOn: serverTimestamp()
+      createdOn: serverTimestamp(),
     };
 
     // Add a new document with a generated id.
     try {
-      await createUser(email, password);
-      await addDoc(collection(db, "users"), {
-        ...newUser,
-      });
+      // Create user in Firebase Authentication
+      const authUserCredential = await createUser(email, password);
+      const { user } = authUserCredential;
+
+      // Set displayName in user object
+      user.displayName = fullName;
+
+      // Use UID as document ID in Firestore
+      await setDoc(doc(db, "users", user.uid), newUser);
       navigate("/home");
     } catch (e) {
       setErrMsg(e.message);
