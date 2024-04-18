@@ -9,8 +9,10 @@ import profileIcon from "../assets/profile-icon-admin2.png";
 import sidelineHeader from "../assets/sideline-firstfloor.png";
 import filterIcon from "../assets/filter-icon.png";
 import schoolBG from "../assets/school-bg.png";
-import "../styles/homepage.css";
 import { UserAuth } from "../context/AuthContext";
+
+// styles
+import "../styles/homepage.css";
 
 const Homepage = () => {
   const [modal, setModal] = useState(false);
@@ -95,7 +97,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Profile Icon */}
+      {/* Profile Modal */}
       <div className={`overlay-profileIcon  ${profileIcons ? "show" : ""}`}>
         <div className="close-btn-container">
           <button onClick={toggleProfileModal} className="profile-closebtn">
@@ -116,7 +118,7 @@ const Homepage = () => {
             <span></span>
           )} */}
           <div className="userName-container">
-            <h3>{user.fullName}</h3>
+            <h3>{user && user.displayName}</h3>
           </div>
           <div className="email-container">
             <p>{user && user.email}</p>
