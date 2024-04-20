@@ -38,7 +38,11 @@ const Homepage = () => {
   // from the clicked button
   const handleBookNow = () => {
     navigate("/rooms", {
-      state: { selectedRoom: selectedRoom },
+      state: {
+        selectedRoom: selectedRoom,
+        roomType: selectedRoom.roomType,
+        roomName: selectedRoom.roomName,
+      },
     });
   };
 
