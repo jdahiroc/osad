@@ -141,7 +141,7 @@ const Rooms = () => {
               Account Name: <span>{user && user.displayName}</span>
             </h6>
             <h6>
-              ID: <span>210000000217</span>
+              ID: <span>{user && user.email}</span>
             </h6>
           </div>
           <div className="attachment-container">
