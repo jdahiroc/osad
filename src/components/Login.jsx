@@ -61,7 +61,7 @@ const Login = () => {
       return userData.fullName;
     } catch (error) {
       console.error("Error fetching user data:", error);
-      throw error; // Propagate the error
+      throw error; 
     }
   };
 
