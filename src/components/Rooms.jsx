@@ -13,25 +13,42 @@ import { UserAuth } from "../context/AuthContext";
 // Reach Hooks
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Rooms = () => {
-  // Modal Function
   const [modal, setModal] = useState(false);
-  //close the modal
+  const [profileIcons, setProfileIcon] = useState(false);
+  const [formFilled, setFormFilled] = useState(false);
+
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [attachments, setAttachments] = useState("");
+
+  // User Authentication
+  const { user, logout } = UserAuth();
+
+  const navigate = useNavigate();
+
+  //close the modal function
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  // profile icon modal
-  const [profileIcons, setProfileIcon] = useState(false);
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
 
-  //Logout Function
-  const { user, logout } = UserAuth();
-  const navigate = useNavigate();
+  // Disabled submit button if form !filled
+  const handleFormChange = () => {
+    // Check if all form fields are filled
+    if (date && attachments) {
+      setFormFilled(true);
+    } else {
+      setFormFilled(false);
+    }
+  };
 
+  //Logout Function
   const handleLogout = async () => {
     try {
       await logout();
@@ -42,10 +59,41 @@ const Rooms = () => {
     }
   };
 
-  // Use location to access state passed as query parameters
-  const location = useLocation();
-  const selectedRoom = location.state && location.state.selectedRoom;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //converts the time format to 12hours
+    const timeFormatted = new Date(date + "T" + time).toLocaleTimeString(
+      "en-US",
+      { hour: "numeric", minute: "numeric", hour12: true }
+    );
 
+    const newRequest = {
+      roomName: roomName,
+      roomType: roomType,
+      email,
+      userName,
+      date,
+      time: timeFormatted,
+      attachments,
+      requestedOn: serverTimestamp(),
+    };
+
+    try {
+      //
+      await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
+      return alert("Request Sent!");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  // Get the selected roomName, roomType from Homepage.jsx
+  const location = useLocation();
+  const { selectedRoom, roomType, roomName } = location.state || {};
+
+  // Get user data from authentication context
+  const email = user ? user.email : "";
+  const userName = user ? user.displayName : "";
 
   return (
     <>
@@ -114,7 +162,7 @@ const Rooms = () => {
 
       {/* contents */}
       <div className="bookContent-container">
-        <form>
+        <form onSubmit={handleSubmit} onChange={handleFormChange}>
           <div className="bookContent-header-container">
             <h3>BOOKING INFORMATION</h3>
             <div className="bookContent-underline"></div>
@@ -122,31 +170,61 @@ const Rooms = () => {
           {/* left section */}
           <div className="room-info">
             <h6>
-              Room Name: <span>{selectedRoom && selectedRoom.roomName}</span>
+              Room Name:
+              <input
+                id="roomName"
+                type="text"
+                defaultValue={selectedRoom && selectedRoom.roomName}
+              />
             </h6>
+
             <h6>
-              Type: <span>{selectedRoom && selectedRoom.roomType}</span>
+              Type:
+              <input
+                id="roomType"
+                type="text"
+                defaultValue={selectedRoom && selectedRoom.roomType}
+              />
             </h6>
           </div>
           <div className="dateAndTime-container">
             <p>Date and Time:</p>
             <div className="selectDateAndTime-container">
-              <input type="date" name="date" />
-              <input type="time" />
+              <input
+                id="date"
+                type="date"
+                name="date"
+                onChange={(e) => setDate(e.target.value)}
+              />
+              <input
+                id="date"
+                type="time"
+                name="time"
+                onChange={(e) => setTime(e.target.value)}
+              />
             </div>
           </div>
           {/* right section */}
           <div className="bookerName-container">
             <h6>
-              Account Name: <span>{user && user.displayName}</span>
+              Account Name:
+              <input
+                id="userName"
+                type="text"
+                defaultValue={user && user.displayName}
+              />
             </h6>
             <h6>
-              ID: <span>{user && user.email}</span>
+              Email:
+              <input id="email" type="text" defaultValue={user && user.email} />
             </h6>
           </div>
           <div className="attachment-container">
             <p>Attach Request Form:</p>
-            <input type="file" />
+            <input
+              type="file"
+              onChange={(e) => setAttachments(e.target.value)}
+            />
           </div>
           <div className="bookingButtons-container">
             <div className="cancel-button">
@@ -155,7 +233,12 @@ const Rooms = () => {
               </Link>
             </div>
             <div className="bookNow-button">
-              <button>BOOK NOW</button>
+              <button
+                className={formFilled ? "" : "disabled"}
+                disabled={!formFilled}
+              >
+                BOOK NOW
+              </button>
             </div>
           </div>
         </form>
