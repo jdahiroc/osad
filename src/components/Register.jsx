@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
-
 import uicLogo from "../assets/logo.png";
 import "../styles/register.css";
 
@@ -15,9 +13,19 @@ const Register = () => {
   const [schoolId, setSchoolId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [formFilled, setFormFilled] = useState(false);
 
   const { createUser } = UserAuth();
   const navigate = useNavigate();
+
+  const handleFormChange = () => {
+    // Check if all form fields are filled
+    if (email && password && fullName && schoolId && confirmPassword) {
+      setFormFilled(true);
+    } else {
+      setFormFilled(false);
+    }
+  };
 
   //------------------
   // Handle Submit
@@ -70,7 +78,7 @@ const Register = () => {
         </div>
 
         <div className="form-container-register">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onChange={handleFormChange}>
             {/* Full Name */}
             <label htmlFor="fullname">Full Name</label>
             <br />
@@ -135,7 +143,7 @@ const Register = () => {
                 <Link to="/"> Log in</Link>
               </span>
             </p>
-            <button>Sign Up</button>
+            <button className={formFilled ? "" : "disabled"} disabled={!formFilled}>Sign Up</button>
           </form>
         </div>
       </div>

@@ -105,6 +105,11 @@ Register.jsx
   font-variation-settings: "slnt" 0;
 }
 
+.form-container-register button:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+}
+
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.5rem;
