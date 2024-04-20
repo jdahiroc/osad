@@ -14,6 +14,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [formFilled, setFormFilled] = useState(false);
+
+  const handleFormChange = () => {
+    // Check if all form fields are filled
+    if (email && password) {
+      setFormFilled(true);
+    } else {
+      setFormFilled(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +82,7 @@ const Login = () => {
           <h1>LOG IN</h1>
         </div>
         <div className="form-container-login">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onChange={handleFormChange}>
             <label htmlFor="studentId" className="labelstdID">
               Student Email
             </label>
@@ -97,7 +107,12 @@ const Login = () => {
               required
             />
             <br />
-            <button>Login</button>
+            <button
+              className={formFilled ? "" : "disabled"}
+              disabled={!formFilled}
+            >
+              Login
+            </button>
           </form>
         </div>
         <p className="signup-container">
