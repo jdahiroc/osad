@@ -21,16 +21,26 @@ const Homepage = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [profileIcons, setProfileIcon] = useState(false);
 
+  // Modal Function
   const toggleModal = () => {
     setModal(!modal);
   };
 
+  // Modal Function
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
 
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
+
+  // Handles Booking Infos to pass data to Rooms.jsx
+  // from the clicked button
+  const handleBookNow = () => {
+    navigate("/rooms", {
+      state: { selectedRoom: selectedRoom },
+    });
+  };
 
   //logout function
   const handleLogout = async () => {
@@ -43,15 +53,7 @@ const Homepage = () => {
     }
   };
 
-  // const getFullNameUser = async () => {
-  //   const querySnapshot = await getDocs(collection(db, "users"));
-  //   const fullNames = querySnapshot.docs.map((doc) => ({
-  //     id: doc.id,
-  //     fullName: doc.data().fullName,
-  //   }));
-  //   setFullName(fullNames);
-  // };
-
+  // Fetch the data (READ Operation)
   const getRoom = async () => {
     const querySnapshot = await getDocs(collection(db, "mainCampus"));
     const roomsData = querySnapshot.docs.map((doc) => ({
@@ -131,14 +133,13 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* UIC IMAGE */}
+      {/* UIC IMAGE Banner */}
       <div className="wide-image">
         <img src={schoolBG} alt="School Background" />
       </div>
 
-      {/* CONTENTS */}
       <div className="content-container">
-        {/* Campus Navigation */}
+        {/* Campus Navigation Header */}
         <div className="campus-navigation-container">
           <div className="filter-icon">
             <a href="#">
@@ -206,9 +207,7 @@ const Homepage = () => {
                   <span>{selectedRoom && selectedRoom.location}</span>
                 </div>
                 <div className="modal-footer">
-                  <Link to="/rooms">
-                    <button>BOOK NOW</button>
-                  </Link>
+                  <button onClick={handleBookNow}>BOOK NOW</button>
                 </div>
               </div>
             </div>
