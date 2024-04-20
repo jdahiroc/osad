@@ -12,11 +12,12 @@ import { UserAuth } from "../context/AuthContext";
 
 // Reach Hooks
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Rooms = () => {
   // Modal Function
   const [modal, setModal] = useState(false);
+  //close the modal
   const toggleModal = () => {
     setModal(!modal);
   };
@@ -41,11 +42,10 @@ const Rooms = () => {
     }
   };
 
-  // handle submit
-  // const [roomName, setRoomName] = useState("");
-  // const [roomType, setRoomType] = useState("");
-  // const [roomName, setRoomName] = useState("");
-  // const handleSubmit = async () => {};
+  // Use location to access state passed as query parameters
+  const location = useLocation();
+  const selectedRoom = location.state && location.state.selectedRoom;
+
 
   return (
     <>
@@ -122,10 +122,10 @@ const Rooms = () => {
           {/* left section */}
           <div className="room-info">
             <h6>
-              Room Name: <span>L201</span>
+              Room Name: <span>{selectedRoom && selectedRoom.roomName}</span>
             </h6>
             <h6>
-              Type: <span>LABORATORY ROOM</span>
+              Type: <span>{selectedRoom && selectedRoom.roomType}</span>
             </h6>
           </div>
           <div className="dateAndTime-container">
@@ -138,7 +138,7 @@ const Rooms = () => {
           {/* right section */}
           <div className="bookerName-container">
             <h6>
-              Account Name: <span>Sarsaba, Rigel Kyle</span>
+              Account Name: <span>{user && user.displayName}</span>
             </h6>
             <h6>
               ID: <span>210000000217</span>
