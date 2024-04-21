@@ -140,10 +140,15 @@ const Register = () => {
               <br />
               <span className="line">
                 {/* put router link here */}
-                <Link to="/"> Log in</Link>
+                <Link to="/"> Login</Link>
               </span>
             </p>
-            <button className={formFilled ? "" : "disabled"} disabled={!formFilled}>Sign Up</button>
+            <button
+              className={formFilled ? "" : "disabled"}
+              disabled={!formFilled}
+            >
+              Sign up
+            </button>
           </form>
         </div>
       </div>

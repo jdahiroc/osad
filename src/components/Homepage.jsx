@@ -57,7 +57,7 @@ const Homepage = () => {
     }
   };
 
-  // Fetch the data (READ Operation)
+  // Fetch the room data (READ Operation)
   const getRoom = async () => {
     const querySnapshot = await getDocs(collection(db, "mainCampus"));
     const roomsData = querySnapshot.docs.map((doc) => ({
