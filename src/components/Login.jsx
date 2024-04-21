@@ -61,7 +61,7 @@ const Login = () => {
       return userData.fullName;
     } catch (error) {
       console.error("Error fetching user data:", error);
-      throw error; 
+      throw error;
     }
   };
 
@@ -79,7 +79,7 @@ const Login = () => {
           <img src={uicLogo} alt="Uic logo" className="uic-logo" />
         </div>
         <div className="h1-container-login">
-          <h1>LOG IN</h1>
+          <h1>LOGIN</h1>
         </div>
         <div className="form-container-login">
           <form onSubmit={handleSubmit} onChange={handleFormChange}>
@@ -116,7 +116,7 @@ const Login = () => {
           </form>
         </div>
         <p className="signup-container">
-          Don`&apos;`t have an Account?
+          Don&apos;t have an Account?
           <br />
           <span className="line">
             {/* Put router link here */}
