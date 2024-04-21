@@ -114,15 +114,6 @@ const Homepage = () => {
           <div className="profile-icon-container">
             <img src={profileIcon} alt="profile-icon" />
           </div>
-          {/* {fullName ? (
-            fullName.map((userName) => (
-              <div className="userName-container" key={userName.id}>
-                <h3>{userName.fullName}</h3>
-              </div>
-            ))
-          ) : (
-            <span></span>
-          )} */}
           <div className="userName-container">
             <h3>{user && user.displayName}</h3>
           </div>
