@@ -11,10 +11,11 @@ import "../styles/rooms.css";
 import { UserAuth } from "../context/AuthContext";
 
 // Reach Hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Rooms = () => {
   const [modal, setModal] = useState(false);
@@ -24,6 +25,13 @@ const Rooms = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [attachments, setAttachments] = useState("");
+
+  useEffect(() => {
+    const uploadFile = () => {
+      // const name = new Date().getTime() + attachments.name;
+    };
+    attachments && uploadFile();
+  }, [attachments]);
 
   // User Authentication
   const { user, logout } = UserAuth();
@@ -66,25 +74,60 @@ const Rooms = () => {
       "en-US",
       { hour: "numeric", minute: "numeric", hour12: true }
     );
+  
+    const storageRef = ref(storage, attachments.name);
+  
+    const uploadTask = uploadBytesResumable(storageRef, attachments);
+  
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (e) => {
+        console.log(e);
+      },
+      async () => {
+        // Handle successful uploads on complete
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+  
+        // Construct the request object with download URL
+        const newRequest = {
+          roomName: roomName,
+          roomType: roomType,
+          email: email,
+          userName: userName,
+          date: date,
+          time: timeFormatted,
+          attachments: downloadURL,
+          requestedOn: serverTimestamp(),
+        };
+  
+        try {
+          // Save the document to Firestore
+          await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
+          alert("Request Sent!"); // Alert that the request has been sent
 
-    const newRequest = {
-      roomName: roomName,
-      roomType: roomType,
-      email,
-      userName,
-      date,
-      time: timeFormatted,
-      attachments,
-      requestedOn: serverTimestamp(),
-    };
-
-    try {
-      //
-      await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
-      return alert("Request Sent!");
-    } catch (e) {
-      console.log(e.message);
-    }
+          navigate("/home");
+        } catch (e) {
+          console.log(e.message);
+        }
+      }
+    );
   };
 
   // Get the selected roomName, roomType from Homepage.jsx
@@ -223,7 +266,7 @@ const Rooms = () => {
             <p>Attach Request Form:</p>
             <input
               type="file"
-              onChange={(e) => setAttachments(e.target.value)}
+              onChange={(e) => setAttachments(e.target.files[0])}
             />
           </div>
           <div className="bookingButtons-container">
