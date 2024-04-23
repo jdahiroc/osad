@@ -7,10 +7,12 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Homepage from "./components/Homepage";
 import Rooms from "./components/Rooms";
+
 // (ADMIN Components)
 import RequestedRoom from "./components/Requestedroom";
 import History from "./components/History";
 
+//Protected Route
 import ProtectedRoute from "./components/ProtectedRoute";
 
 //bootstrap link
