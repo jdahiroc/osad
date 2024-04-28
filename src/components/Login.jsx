@@ -41,7 +41,7 @@ const Login = () => {
       navigate("/home");
     } catch (error) {
       console.log(error.message);
-      setErrMsg("Invalid Credentials. Try again!");
+      setErrMsg("Invalid User Credentials. Please try again!");
     }
   };
 
