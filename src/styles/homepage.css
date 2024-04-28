@@ -57,8 +57,10 @@
 }
 
 .wide-image img {
+  padding-left: 50px;
+  padding-right: 50px;
   height: auto;
-  width: 1350px;
+  width: auto;
 }
 
 /* this one for rooms modal overlay */
