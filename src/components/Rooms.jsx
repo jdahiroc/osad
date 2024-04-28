@@ -3,6 +3,7 @@ import uicBanner from "../assets/uic-logo2.png";
 import verticalLine from "../assets/vertical-line.png";
 import sideLine from "../assets/sideline-firstfloor.png";
 import profileIcon from "../assets/profile-icon.png";
+import uploadIcon from "../assets/Upload.png";
 
 //css link
 import "../styles/rooms.css";
@@ -275,7 +276,12 @@ const Rooms = () => {
             <input
               type="file"
               onChange={(e) => setAttachments(e.target.files[0])}
+              id="uploadBtn"
             />
+            <label className="uploadLabel" htmlFor="uploadBtn">
+              <img src={uploadIcon} alt="Upload Icon" />
+              Upload
+            </label>  
           </div>
           <div className="bookingButtons-container">
             <div className="cancel-button">
