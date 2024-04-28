@@ -19,7 +19,6 @@ import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Rooms = () => {
-  const [modal, setModal] = useState(false);
   const [profileIcons, setProfileIcon] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
 
@@ -39,10 +38,6 @@ const Rooms = () => {
 
   const navigate = useNavigate();
 
-  //close the modal function
-  const toggleModal = () => {
-    setModal(!modal);
-  };
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
@@ -50,7 +45,7 @@ const Rooms = () => {
   // Disabled submit button if form !filled
   const handleFormChange = () => {
     // Check if all form fields are filled
-    if (date && attachments) {
+    if (attachments) {
       setFormFilled(true);
     } else {
       setFormFilled(false);
@@ -87,7 +82,7 @@ const Rooms = () => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        alert("Upload is " + progress + "% done");
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -281,7 +276,7 @@ const Rooms = () => {
             <label className="uploadLabel" htmlFor="uploadBtn">
               <img src={uploadIcon} alt="Upload Icon" />
               Upload
-            </label>  
+            </label>
           </div>
           <div className="bookingButtons-container">
             <div className="cancel-button">
