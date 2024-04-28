@@ -74,11 +74,11 @@ const Rooms = () => {
       "en-US",
       { hour: "numeric", minute: "numeric", hour12: true }
     );
-  
+
     const storageRef = ref(storage, attachments.name);
-  
+
     const uploadTask = uploadBytesResumable(storageRef, attachments);
-  
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -104,7 +104,7 @@ const Rooms = () => {
       async () => {
         // Handle successful uploads on complete
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-  
+
         // Construct the request object with download URL
         const newRequest = {
           roomName: roomName,
@@ -116,7 +116,7 @@ const Rooms = () => {
           attachments: downloadURL,
           requestedOn: serverTimestamp(),
         };
-  
+
         try {
           // Save the document to Firestore
           await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
@@ -218,6 +218,7 @@ const Rooms = () => {
                 id="roomName"
                 type="text"
                 defaultValue={selectedRoom && selectedRoom.roomName}
+                disabled
               />
             </h6>
 
@@ -227,6 +228,7 @@ const Rooms = () => {
                 id="roomType"
                 type="text"
                 defaultValue={selectedRoom && selectedRoom.roomType}
+                disabled
               />
             </h6>
           </div>
@@ -255,11 +257,17 @@ const Rooms = () => {
                 id="userName"
                 type="text"
                 defaultValue={user && user.displayName}
+                disabled
               />
             </h6>
             <h6>
               Email:
-              <input id="email" type="text" defaultValue={user && user.email} />
+              <input
+                id="email"
+                type="text"
+                defaultValue={user && user.email}
+                disabled
+              />
             </h6>
           </div>
           <div className="attachment-container">

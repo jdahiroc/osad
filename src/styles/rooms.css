@@ -132,6 +132,15 @@
   font-size: 23px;
 }
 
+.room-info input:disabled {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.room-info input:hover {
+  color: #000000;
+}
+
 .dateAndTime-container {
   margin-top: 1.5em;
 }
@@ -169,13 +178,20 @@
   font-family: "DM Sans", sans-serif;
   font-weight: 800;
   font-size: 20px;
+  cursor: pointer;
 }
+
 
 .bookerName-container input {
   border: none;
   padding-left: 0.3em;
   font-weight: 400;
   font-size: 23px;
+}
+
+.bookerName-container input:disabled {
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 .attachment-container {
