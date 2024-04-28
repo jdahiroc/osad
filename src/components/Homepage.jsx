@@ -104,7 +104,7 @@ const Homepage = () => {
       </div>
 
       {/* Profile Modal */}
-      <div className={`overlay-profileIcon  ${profileIcons ? "show" : ""}`}>
+      <div className={`overlay-profileIcon  ${profileIcons ? "show" : "hide"}`}>
         <div className="close-btn-container">
           <button onClick={toggleProfileModal} className="profile-closebtn">
             &times;
@@ -178,7 +178,7 @@ const Homepage = () => {
         </div>
 
         {/* Room Information Modal */}
-        <div id="modal" className={`overlay ${modal ? "show" : ""}`}>
+        <div className={`overlay ${modal ? "show" : "hide"}`}>
           <span className="close" onClick={toggleModal}>
             &times;
           </span>
