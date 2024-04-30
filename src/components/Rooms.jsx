@@ -82,7 +82,7 @@ const Rooms = () => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        alert("Upload is " + progress + "% done");
+        alert("Upload is " + progress + "%");
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
