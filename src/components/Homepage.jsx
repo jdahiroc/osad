@@ -143,10 +143,7 @@ const Homepage = () => {
           </div>
           <div className="campus-navigation">
             <a href="#">MAIN CAMPUS</a>
-
             <div className="underline"></div>
-
-            <a href="#">ANNEX CAMPUS</a>
           </div>
         </div>
 
@@ -178,6 +175,7 @@ const Homepage = () => {
         </div>
 
         {/* Room Information Modal */}
+
         <div className={`overlay ${modal ? "show" : "hide"}`}>
           <span className="close" onClick={toggleModal}>
             &times;
