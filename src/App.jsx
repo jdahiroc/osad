@@ -11,6 +11,7 @@ import Rooms from "./components/Rooms";
 // (ADMIN Components)
 import RequestedRoom from "./components/Requestedroom";
 import History from "./components/History";
+import AdminLogin from "./components/AdminLogin";
 
 //Protected Route
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" index element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/a/login" element={<AdminLogin />} />
           <Route
             path="/home"
             element={
