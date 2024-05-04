@@ -58,7 +58,7 @@ const ForgotPassword = () => {
 
               <button>Send</button>
 
-              <Link to="/a/login">
+              <Link to="/">
                 <span className="cancel-button">Cancel</span>
               </Link>
             </form>
