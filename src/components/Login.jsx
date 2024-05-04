@@ -1,16 +1,21 @@
+// Import Firestore functions
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { getDocs, collection, query, where } from "firebase/firestore"; // Import Firestore functions
-
-import uicLogo from "../assets/logo.png";
-import "../styles/login.css";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../firebase";
+
+//Image
+import uicLogo from "../assets/logo.png";
+
+// CSS
+import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const { signIn, updateProfile } = UserAuth();
 
+  // useState Hooks
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -119,7 +124,6 @@ const Login = () => {
           Don&apos;t have an Account?
           <br />
           <span className="line">
-            {/* Put router link here */}
             <Link to="/register">Sign up</Link>
           </span>
         </p>

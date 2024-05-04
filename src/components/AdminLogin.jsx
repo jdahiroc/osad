@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { getDocs, collection, query, where } from "firebase/firestore"; // Import Firestore functions
 import { db } from "../firebase";
 
 // uic logo
 import uicLogo from "../assets/logo.png";
+
 // Styles
 import "../styles/adminLogin.css";
 
@@ -29,7 +30,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrMsg("");
+    setErrMsg(""); // Clear any previous error messages
     try {
       // Sign in the user
       await signIn(email, password);
@@ -42,8 +43,8 @@ const Login = () => {
 
       navigate("/a/request");
     } catch (error) {
-      console.log(error.message);
-      setErrMsg("Invalid User Credentials. Please try again!");
+      console.error("Error signing in:", error); // Log the error for debugging
+      setErrMsg("Failed to sign in. Please try again.");
     }
   };
 
@@ -69,12 +70,14 @@ const Login = () => {
 
   return (
     <>
+      {/* error message */}
       <div className="error-container-login">
         {/* Error message */}
         <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
           {errMsg}
         </p>
       </div>
+
       {/* Login Section */}
       <div className="login-section">
         <div className="img-container-login">
@@ -108,6 +111,12 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <span className="forgotPassword">
+              <Link to="/forgot-password">
+                <span className="forgotpassButton">Forgot Password?</span>
+              </Link>
+            </span>
+
             <br />
             <button
               className={formFilled ? "" : "disabled"}
