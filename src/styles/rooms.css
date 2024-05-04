@@ -146,19 +146,18 @@ input[type="file"] {
   padding: 10px 5px;
   background: #fa7e93;
   border-radius: 5px;
-  box-shadow: 0 2px 2px 1px #0000001e
+  box-shadow: 0 2px 2px 1px #0000001e;
 }
 
-.uploadLabel:hover{
+.uploadLabel:hover {
   background-color: #e92c2c;
   cursor: pointer;
-  
 }
 
 .uploadLabel img {
   height: 25px;
   width: 25px;
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 
 .room-info input:disabled {
@@ -240,7 +239,7 @@ input[type="file"] {
 .attachment-container input {
   padding: 4px;
   font-family: "DM Sans", sans-serif;
-  margin-left: 0.1em;
+  margin-left: 0.5em;
 }
 
 /* Buttons in Booking */
@@ -261,6 +260,10 @@ input[type="file"] {
   font-family: "DM Sans", sans-serif;
   font-weight: bold;
   font-size: 18px;
+}
+
+.bookContent-container .bookingButtons-container .bookNow-button {
+  margin-top: 1.5em;
 }
 
 .bookContent-container .bookingButtons-container button:hover {

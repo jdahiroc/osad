@@ -25,6 +25,7 @@ const Rooms = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [attachments, setAttachments] = useState("");
+  const [attachmentFileName, setAttachmentFileName] = useState("");
 
   useEffect(() => {
     const uploadFile = () => {
@@ -44,11 +45,12 @@ const Rooms = () => {
 
   // Disabled submit button if form !filled
   const handleFormChange = () => {
-    // Check if all form fields are filled
     if (attachments) {
       setFormFilled(true);
+      setAttachmentFileName(attachments.name); // Set the filename
     } else {
       setFormFilled(false);
+      setAttachmentFileName("");
     }
   };
 
@@ -271,13 +273,17 @@ const Rooms = () => {
             <p>Attach Request Form:</p>
             <input
               type="file"
-              onChange={(e) => setAttachments(e.target.files[0])}
+              onChange={(e) => {
+                setAttachments(e.target.files[0]);
+              }}
               id="uploadBtn"
             />
             <label className="uploadLabel" htmlFor="uploadBtn">
               <img src={uploadIcon} alt="Upload Icon" />
               Upload
             </label>
+            {attachmentFileName && <span>{attachmentFileName}</span>}
+            {/* Display the filename */}
           </div>
           <div className="bookingButtons-container">
             <div className="cancel-button">
