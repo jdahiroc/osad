@@ -77,6 +77,8 @@ const Requestedroom = () => {
       await addDoc(collection(db, "history"), acceptedItem);
       await deleteDoc(doc(db, "requestedRoom", id));
 
+      alert("Book Request has been approved. Already sent to user!");
+
       // Remove the accepted item from the data state
       setData(data.filter((item) => item.id !== id));
     } catch (e) {
@@ -87,7 +89,14 @@ const Requestedroom = () => {
   //handle Delete Function
   const handleDelete = async (id) => {
     try {
+      // Fetch the accepted item
+      const acceptedItem = data.find((item) => item.id === id);
+
+      // Update the status to "approved"
+      acceptedItem.status = "DECLINED";
       await deleteDoc(doc(db, "requestedRoom", id));
+      // Add the accepted item to the history collection
+      await addDoc(collection(db, "history"), acceptedItem);
       setData(data.filter((item) => item.id !== id));
     } catch (e) {
       console.log(e);
@@ -254,7 +263,7 @@ const Requestedroom = () => {
                     className="delete"
                   >
                     <img src={declineIcon} alt="Delete" />
-                    Delete
+                    Decline
                   </button>
                 </td>
               </tr>
