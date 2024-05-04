@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap");
+/* LOADING */
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 320px;
+  transition: 5s linear;
+}
+
 /*---------- Navigation ----------*/
 .navigation {
   display: flex;
@@ -137,10 +145,19 @@
   padding: 6px 10px;
 }
 
+/* td status */
+.request-fetch-status {
+  color: #ffaf45;
+}
+
 .additional-labels td button {
   border: none; /* Remove button border */
   border-radius: 5px; /* Add border radius */
   cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.additional-labels td button:hover {
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .additional-labels button.accept {
@@ -201,14 +218,11 @@
 .overlay {
   display: none;
   position: fixed;
-  z-index: 998; /* Reduce the z-index to ensure it's behind the modal content */
+  z-index: 1000; /* Reduce the z-index to ensure it's behind the modal content */
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  max-width: 1500px;
-  backdrop-filter: transparent;
-  background-color: rgba(0, 0, 0, 0.4); /* Adjust the opacity if needed */
 }
 
 /* Profile Modal / Pop up */
@@ -235,12 +249,9 @@
 
 .modal-content {
   position: relative;
-  background-color: #fff; /* Change background color */
   margin: 5% auto; /* Adjust margin for better centering */
-
   border-radius: 8px; /* Add border-radius for rounded corners */
   backdrop-filter: transparent;
-  background-color: rgba(0, 0, 0, 0.4); /* Add box shadow for depth */
   max-width: 800px; /* Limit maximum width */
   font-family: "DM Sans", sans-serif;
   font-style: normal;
@@ -265,7 +276,7 @@
 
 .info-container .left-column p strong {
   font-family: "DM Sans", sans-serif;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .left-column,
@@ -276,8 +287,9 @@
 
 .info-container .right-column p strong {
   font-family: "DM Sans", sans-serif;
-  font-weight: 400;
+  font-weight: 700;
 }
+
 .right-column {
   text-align: right;
 }
@@ -293,9 +305,17 @@
   text-align: left;
 }
 
-.right-align input {
-  margin-top: 1em;
+.right-align button {
   border: none;
+  background-color: #ffffff;
+  color: rgba(0, 0, 255, 0.782);
+  text-decoration: underline;
+}
+
+.request-status {
+  display: inline-flex;
+  padding-left: 0.5em;
+  color: orange;
 }
 
 .right-column {
