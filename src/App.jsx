@@ -12,6 +12,7 @@ import Rooms from "./components/Rooms";
 import RequestedRoom from "./components/Requestedroom";
 import History from "./components/History";
 import AdminLogin from "./components/AdminLogin";
+import ForgotPassword from "./components/ForgotPassword";
 
 //Protected Route
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" index element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/a/login" element={<AdminLogin />} />
           <Route
             path="/home"
