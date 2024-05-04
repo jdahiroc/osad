@@ -56,9 +56,11 @@ const Requestedroom = () => {
     try {
       await logout();
       navigate("/");
+      setLoading(false); // Set loading state to false
       console.log("You are logged out!");
     } catch (e) {
       console.log(e.message);
+      setLoading(false); // Set loading state to false
     }
   };
 
