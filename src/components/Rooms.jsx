@@ -111,6 +111,7 @@ const Rooms = () => {
           time: timeFormatted,
           attachments: downloadURL,
           requestedOn: serverTimestamp(),
+          status: "PENDING",
         };
 
         try {
