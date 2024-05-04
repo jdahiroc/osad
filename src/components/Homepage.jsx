@@ -130,7 +130,7 @@ const Homepage = () => {
 
       {/* UIC IMAGE Banner */}
       <div className="wide-image">
-        <img src={schoolBG} alt="School Background" />
+        <img src={schoolBG} alt="School Background" loading="lazy" />
       </div>
 
       <div className="content-container">
