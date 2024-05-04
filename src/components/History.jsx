@@ -174,23 +174,36 @@ const History = () => {
             <th>Status</th>
           </tr>
         </thead>
+
         <tbody>
-          {/* Renders the data by mapping all data */}
-          {historyData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.date}</td>
-              <td>{item.time}</td>
-              <td>{item.roomName}</td>
-              <td>{item.userName}</td>
-              <td>{item.email}</td>
-              <td>{item.status}</td>
-              <td>
-                <button onClick={() => toggleModal(item)} className="show-info">
-                  <img src={eyeIcon} />
-                </button>
+          {/* If data is empty */}
+          {historyData.length === 0 ? (
+            <tr>
+              <td colSpan="6" className="empty-table-message">
+                No data available
               </td>
             </tr>
-          ))}
+          ) : (
+            // Renders the data by mapping all data
+            historyData.map((item) => (
+              <tr key={item.id}>
+                <td>{item.date}</td>
+                <td>{item.time}</td>
+                <td>{item.roomName}</td>
+                <td>{item.userName}</td>
+                <td>{item.email}</td>
+                <td>{item.status}</td>
+                <td>
+                  <button
+                    onClick={() => toggleModal(item)}
+                    className="show-info"
+                  >
+                    <img src={eyeIcon} />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 
@@ -203,7 +216,7 @@ const History = () => {
           </span>
           {selectedItem && (
             <>
-              <h2>{selectedItem.userName} History</h2>
+              <h2>{selectedItem.userName}&apos;s History</h2>
               <hr />
               <div className="info-container">
                 <div className="left-column">
