@@ -111,6 +111,11 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <span className="forgotPassword">
+              <Link to="/forgot-password">
+                <span className="forgotpassButton">Forgot Password?</span>
+              </Link>
+            </span>
             <br />
             <button
               className={formFilled ? "" : "disabled"}
