@@ -1,5 +1,5 @@
-// Import Firestore functions
-import { useState } from "react";
+// Import React and necessary components
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { getDocs, collection, query, where } from "firebase/firestore";
@@ -11,6 +11,7 @@ import uicLogo from "../assets/logo.png";
 // CSS
 import "../styles/login.css";
 
+// Define Login component
 const Login = () => {
   const navigate = useNavigate();
   const { signIn, updateProfile } = UserAuth();
@@ -72,66 +73,69 @@ const Login = () => {
 
   return (
     <>
-      <div className="error-container-login">
-        {/* Error message */}
-        <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-          {errMsg}
-        </p>
-      </div>
-      {/* Login Section */}
-      <div className="login-section">
-        <div className="img-container-login">
-          <img src={uicLogo} alt="Uic logo" className="uic-logo" />
+      <div className="background-container">
+        {/* Your login content */}
+        <div className="error-container-login">
+          {/* Error message */}
+          <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+            {errMsg}
+          </p>
         </div>
-        <div className="h1-container-login">
-          <h1>LOGIN</h1>
-        </div>
-        <div className="form-container-login">
-          <form onSubmit={handleSubmit} onChange={handleFormChange}>
-            <label htmlFor="studentId" className="labelstdID">
-              Student Email
-            </label>
+        {/* Login Section */}
+        <div className="login-section">
+          <div className="img-container-login">
+            <img src={uicLogo} alt="Uic logo" className="uic-logo" />
+          </div>
+          <div className="h1-container-login">
+            <h1>LOGIN</h1>
+          </div>
+          <div className="form-container-login">
+            <form onSubmit={handleSubmit} onChange={handleFormChange}>
+              <label htmlFor="studentId" className="labelstdID">
+                Student Email
+              </label>
+              <br />
+              <input
+                type="text"
+                id="studentId"
+                placeholder="Enter your email here"
+                autoComplete="off"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br />
+              <label htmlFor="password" className="labelstdPWD">
+                Password
+              </label>
+              <br />
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password here"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span className="forgotPassword">
+                <Link to="/forgot-password">
+                  <span className="forgotpassButton">Forgot Password?</span>
+                </Link>
+              </span>
+              <br />
+              <button
+                className={formFilled ? "" : "disabled"}
+                disabled={!formFilled}
+              >
+                Login
+              </button>
+            </form>
+          </div>
+          <p className="signup-container">
+            Don&apos;t have an Account?
             <br />
-            <input
-              type="text"
-              id="studentId"
-              placeholder="Enter your email here"
-              autoComplete="off"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <label htmlFor="password" className="labelstdPWD">
-              Password
-            </label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password here"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <span className="forgotPassword">
-              <Link to="/forgot-password">
-                <span className="forgotpassButton">Forgot Password?</span>
-              </Link>
+            <span className="line">
+              <Link to="/register">Sign up</Link>
             </span>
-            <br />
-            <button
-              className={formFilled ? "" : "disabled"}
-              disabled={!formFilled}
-            >
-              Login
-            </button>
-          </form>
+          </p>
         </div>
-        <p className="signup-container">
-          Don&apos;t have an Account?
-          <br />
-          <span className="line">
-            <Link to="/register">Sign up</Link>
-          </span>
-        </p>
       </div>
     </>
   );

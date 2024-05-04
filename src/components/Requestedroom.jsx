@@ -101,7 +101,7 @@ const Requestedroom = () => {
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   //get the request real-time data from db
   const getRequestData = () => {

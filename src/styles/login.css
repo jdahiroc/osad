@@ -135,3 +135,11 @@
   background-color: #999999;
   cursor: not-allowed;
 }
+
+.background-container {
+  background-image: url('../assets/uic-school-bg.png');
+  background-size: cover;
+  background-position: center;
+  /* Additional styling if needed */
+}
+
