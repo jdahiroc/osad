@@ -6,20 +6,39 @@ import schoolBG from "../assets/request-banner.png";
 import acceptIcon from "../assets/Done.png";
 import eyeIcon from "../assets/Eye.png";
 import declineIcon from "../assets/Close.png";
+
 //CSS
 import "../styles/requestedroom.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //User Authentication
 import { UserAuth } from "../context/AuthContext";
+
 // Reach Hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  addDoc,
+} from "firebase/firestore";
+import { db } from "../firebase";
 
 const Requestedroom = () => {
+  // useStates
+  const [data, setData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // loading state
+  const [loading, setLoading] = useState(true);
+
   // Modal Function
   const [modal, setModal] = useState(false);
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleModal = (item) => {
+    setSelectedItem(item); // Set the selected item
+    setModal(!modal); // Toggle the modal
   };
 
   // profile icon modal
@@ -32,6 +51,7 @@ const Requestedroom = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
+  //Logout Function
   const handleLogout = async () => {
     try {
       await logout();
@@ -41,6 +61,72 @@ const Requestedroom = () => {
       console.log(e.message);
     }
   };
+
+  //handle Accept Function
+  const handleAccept = async (id) => {
+    try {
+      // Fetch the accepted item
+      const acceptedItem = data.find((item) => item.id === id);
+
+      // Update the status to "approved"
+      acceptedItem.status = "APPROVED";
+
+      // Add the accepted item to the history collection
+      await addDoc(collection(db, "history"), acceptedItem);
+      await deleteDoc(doc(db, "requestedRoom", id));
+
+      // Remove the accepted item from the data state
+      setData(data.filter((item) => item.id !== id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //handle Delete Function
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "requestedRoom", id));
+      setData(data.filter((item) => item.id !== id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //get the request real-time data from db
+  const getRequestData = () => {
+    const unsub = onSnapshot(
+      collection(db, "requestedRoom"),
+      (snapShot) => {
+        const requestData = [];
+        snapShot.docs.forEach((doc) => {
+          requestData.push({ id: doc.id, ...doc.data() });
+        });
+        setData(requestData); // Set the data state
+        setLoading(false); // Set loading state to false
+      },
+      (error) => {
+        console.log("Error fetching data: ", error);
+        setLoading(false); // Set loading state to false
+      }
+    );
+
+    return () => {
+      unsub();
+    };
+  };
+
+  useEffect(() => {
+    getRequestData();
+  }, []);
+
+  // Render loading state if data is loading
+  if (loading) {
+    return (
+      <div className="loading">
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -111,114 +197,122 @@ const Requestedroom = () => {
           alt="Filter Icon"
         />
         <div className="filter-text">
-          <span>ALL</span>
           <span>MAIN CAMPUS</span>
-          <span>ANNEX CAMPUS</span>
         </div>
       </div>
       <div className="hr-line-container">
         <hr className="hr-line" />
       </div>
 
-      {/* <!-- Table with Additional Label Text --> */}
       <table className="additional-labels">
-        <tr>
-          <th>Date</th>
-          <th>Room Name</th>
-          <th>ID</th>
-          <th>Campus</th>
-          <th></th>
-        </tr>
-
-        <tr
-          className="table-row"
-          data-toggle="modal"
-          data-target="#detailsModal"
-        >
-          <td>03/30/2024</td>
-          <td>L201</td>
-          <td>210000000217</td>
-          <td>Main Campus</td>
-          <td>
-            <button onClick={toggleModal} className="show-info">
-              <img src={eyeIcon} />
-            </button>
-            <button className="accept">
-              <img src={acceptIcon} />
-              Accept
-            </button>
-            <button className="delete">
-              <img src={declineIcon} />
-              Delete
-            </button>
-          </td>
-        </tr>
-        <tr
-          className="table-row"
-          data-toggle="modal"
-          data-target="#detailsModal"
-          onClick={toggleModal}
-        >
-          <td>03/30/2024</td>
-          <td>L201</td>
-          <td>210000000217</td>
-          <td>Main Campus</td>
-          <td>
-            <button onClick={toggleModal} className="show-info">
-              <img src={eyeIcon} />
-            </button>
-            <button className="accept">
-              <img src={acceptIcon} />
-              Accept
-            </button>
-            <button className="delete">
-              <img src={declineIcon} />
-              Delete
-            </button>
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Room Name</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* If data is not available/empty */}
+          {data.length === 0 ? (
+            <tr>
+              <td colSpan="6" className="empty-table-message">
+                No data available
+              </td>
+            </tr>
+          ) : (
+            // Renders the data by mapping all data
+            data.map((item, index) => (
+              <tr key={index} className="table-row">
+                <td>{item.date}</td>
+                <td>{item.time}</td>
+                <td>{item.roomName}</td>
+                <td>{item.userName}</td>
+                <td>{item.email}</td>
+                <td className="request-fetch-data">{item.status}</td>
+                <td>
+                  <button
+                    onClick={() => toggleModal(item)}
+                    className="show-info"
+                  >
+                    <img src={eyeIcon} alt="View" />
+                  </button>
+                  <button
+                    onClick={() => handleAccept(item.id)}
+                    className="accept"
+                  >
+                    <img src={acceptIcon} alt="Accept" />
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="delete"
+                  >
+                    <img src={declineIcon} alt="Delete" />
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
       </table>
 
-      {/* <!-- Modal --> */}
-      <div id="detailsModal" className={`overlay ${modal ? "show" : ""}`}>
+      {/* <!-- Show Icon Modal --> */}
+      <div className={`overlay ${modal ? "show" : ""}`}>
         <div className="modal-content">
-          {/* <!-- Add modal content here --> */}
           <span onClick={toggleModal} className="close">
             &times;
           </span>
-          <h2>USER HISTORY</h2>
-          <hr />
-          <div className="info-container">
-            <div className="left-column">
-              <p>
-                <strong>Room Name: JUSTIN DAVE</strong>
-              </p>
-              <p>
-                <strong>Type:</strong>
-              </p>
-              <p>
-                <strong>Date:</strong>
-              </p>
-              <p>
-                <strong>Time Slot:</strong>
-              </p>
-            </div>
-            <div className="right-column">
-              <p>
-                <strong>Status: HAPPY BIRTHDAY PO</strong>
-              </p>
-              <p>
-                <strong>Account Name:</strong>
-              </p>
-              <p>
-                <strong>ID:</strong>
-              </p>
-              <p className="right-align">
-                <strong>Request Form:</strong>
-                <input type="file" id="fileInput" />
-              </p>
-            </div>
-          </div>
+          {/* Renders the mapped selected item */}
+          {selectedItem && (
+            <>
+              <h2>Request Information</h2>
+              <hr />
+              <div className="info-container">
+                <div className="left-column">
+                  <p>
+                    <strong>Room Name: </strong> {selectedItem.roomName}
+                  </p>
+                  <p>
+                    <strong>Type: </strong> {selectedItem.roomType}
+                  </p>
+                  <p>
+                    <strong>Date: </strong> {selectedItem.date}
+                  </p>
+                  <p>
+                    <strong>Time: </strong> {selectedItem.time}
+                  </p>
+                </div>
+                <div className="right-column">
+                  <p>
+                    <strong>Account Name: </strong> {selectedItem.userName}
+                  </p>
+
+                  <p>
+                    <strong>Email: </strong> {selectedItem.email}
+                  </p>
+                  <p className="right-align">
+                    <strong>Attachments: </strong>
+                    <button
+                      onClick={() =>
+                        window.open(selectedItem.attachments, "_blank")
+                      }
+                    >
+                      Open file
+                    </button>
+                  </p>
+                  <p>
+                    <strong>Status:</strong>
+                    <p className="request-status">{selectedItem.status}</p>
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
