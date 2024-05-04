@@ -6,22 +6,32 @@ import eyeIcon from "../assets/Eye.png";
 import schoolBG from "../assets/history-banner.png";
 //CSS
 import "../styles/history.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //User Authentication
 import { UserAuth } from "../context/AuthContext";
 // Reach Hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
 const History = () => {
-  // // Modal Function
+  // useStates hooks
   const [modal, setModal] = useState(false);
-  const toggleModal = () => {
+  const [profileIcons, setProfileIcon] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [historyData, setHistoryData] = useState([]);
+
+  // loading state
+  const [loading, setLoading] = useState(true);
+
+  // // Modal Function
+  const toggleModal = (item) => {
+    setSelectedItem(item);
     setModal(!modal);
   };
-
   // profile icon modal
-  const [profileIcons, setProfileIcon] = useState(false);
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
@@ -40,6 +50,42 @@ const History = () => {
     }
   };
 
+  //get the history real-time data from db
+  const getHistoryData = () => {
+    const unsub = onSnapshot(
+      collection(db, "history"),
+      (snapShot) => {
+        const Data = [];
+        snapShot.docs.forEach((doc) => {
+          Data.push({ id: doc.id, ...doc.data() });
+        });
+        setHistoryData(Data);
+        setLoading(false); // Set loading state to false
+      },
+      (error) => {
+        console.log("Error fetching data: ", error);
+        setLoading(false); // Set loading state to false in case of error
+      }
+    );
+
+    return () => {
+      unsub();
+    };
+  };
+
+  useEffect(() => {
+    getHistoryData();
+  }, []);
+
+  // Render loading state if data is loading
+  if (loading) {
+    return (
+      <div className="loading">
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
     <>
       {/* <!-- NAVIGATION --> */}
@@ -54,18 +100,18 @@ const History = () => {
           <ul>
             <li>
               <Link to="/a/request">
-                <a>REQUESTS</a>
+                <span>REQUESTS</span>
               </Link>
             </li>
             <li>
               <Link to="/a/history">
-                <a>HISTORY</a>
+                <span>HISTORY</span>
               </Link>
             </li>
             <li>
-              <a onClick={toggleProfileModal}>
+              <span onClick={toggleProfileModal}>
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
-              </a>
+              </span>
             </li>
           </ul>
         </div>
@@ -109,9 +155,7 @@ const History = () => {
           alt="Filter Icon"
         />
         <div className="filter-text">
-          <span>ALL</span>
           <span>MAIN CAMPUS</span>
-          <span>ANNEX CAMPUS</span>
         </div>
       </div>
       <div className="hr-line-container">
@@ -120,29 +164,34 @@ const History = () => {
 
       {/* <!-- Table with Additional Label Text --> */}
       <table className="additional-labels">
-        <tr>
-          <th>Date</th>
-          <th>Room Name</th>
-          <th>ID</th>
-          <th>Campus</th>
-          <th></th>
-        </tr>
-
-        <tr
-          className="table-row"
-          data-toggle="modal"
-          data-target="#detailsModal"
-        >
-          <td>03/30/2024</td>
-          <td>L201</td>
-          <td>210000000217</td>
-          <td>Main Campus</td>
-          <td>
-            <button onClick={toggleModal} className="show-info">
-              <img src={eyeIcon} /> Show
-            </button>
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Room Name</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Renders the data by mapping all data */}
+          {historyData.map((item) => (
+            <tr key={item.id}>
+              <td>{item.date}</td>
+              <td>{item.time}</td>
+              <td>{item.roomName}</td>
+              <td>{item.userName}</td>
+              <td>{item.email}</td>
+              <td>{item.status}</td>
+              <td>
+                <button onClick={() => toggleModal(item)} className="show-info">
+                  <img src={eyeIcon} />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       {/* <!-- Modal --> */}
@@ -152,39 +201,49 @@ const History = () => {
           <span onClick={toggleModal} className="close">
             &times;
           </span>
-          <h2>USER HISTORY</h2>
-          <hr />
-          <div className="info-container">
-            <div className="left-column">
-              <p>
-                <strong>Room Name:</strong>
-              </p>
-              <p>
-                <strong>Type:</strong>
-              </p>
-              <p>
-                <strong>Date:</strong>
-              </p>
-              <p>
-                <strong>Time Slot:</strong>
-              </p>
-            </div>
-            <div className="right-column">
-              <p>
-                <strong>Status:</strong>
-              </p>
-              <p>
-                <strong>Account Name:</strong>
-              </p>
-              <p>
-                <strong>ID:</strong>
-              </p>
-              <p className="right-align">
-                <strong>Request Form:</strong>
-                <input type="file" id="fileInput" />
-              </p>
-            </div>
-          </div>
+          {selectedItem && (
+            <>
+              <h2>{selectedItem.userName} History</h2>
+              <hr />
+              <div className="info-container">
+                <div className="left-column">
+                  <p>
+                    <strong>Room Name: </strong> {selectedItem.roomName}
+                  </p>
+                  <p>
+                    <strong>Type: </strong> {selectedItem.roomType}
+                  </p>
+                  <p>
+                    <strong>Date: </strong> {selectedItem.date}
+                  </p>
+                  <p>
+                    <strong>Time: </strong> {selectedItem.time}
+                  </p>
+                </div>
+                <div className="right-column">
+                  <p>
+                    <strong>Account Name: </strong> {selectedItem.userName}
+                  </p>
+                  <p>
+                    <strong>Email: </strong> {selectedItem.email}
+                  </p>
+                  <p className="right-align">
+                    <strong>Attachments: </strong>
+                    <button
+                      onClick={() =>
+                        window.open(selectedItem.attachments, "_blank")
+                      }
+                    >
+                      Open file
+                    </button>
+                  </p>
+                  <p>
+                    <strong>Status: </strong> {selectedItem.status}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
