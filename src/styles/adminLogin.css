@@ -142,3 +142,17 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.background-container-admin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url('../assets/uic-school-bg.png');
+  background-size: cover;
+  background-position: center;
+  /* Additional styling if needed */
+}
+

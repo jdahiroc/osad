@@ -70,61 +70,63 @@ const Login = () => {
 
   return (
     <>
-      {/* error message */}
-      <div className="error-container-login">
+      {/* Background container with background image */}
+      <div className="background-container-admin">
         {/* Error message */}
-        <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-          {errMsg}
-        </p>
-      </div>
-
-      {/* Login Section */}
-      <div className="login-section">
-        <div className="img-container-login">
-          <img src={uicLogo} alt="Uic logo" className="uic-logo" />
+        <div className="error-container-login">
+          <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+            {errMsg}
+          </p>
         </div>
-        <div className="h1-container-login">
-          <h1>ADMINISTRATOR</h1>
-        </div>
-        <div className="form-container-login">
-          <form onSubmit={handleSubmit} onChange={handleFormChange}>
-            <label htmlFor="studentId" className="labelstdID">
-              Email
-            </label>
-            <br />
-            <input
-              type="text"
-              id="studentId"
-              placeholder="Enter your email here"
-              autoComplete="off"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <label htmlFor="password" className="labelstdPWD">
-              Password
-            </label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password here"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <span className="forgotPassword">
-              <Link to="/forgot-password">
-                <span className="forgotpassButton">Forgot Password?</span>
-              </Link>
-            </span>
 
-            <br />
-            <button
-              className={formFilled ? "" : "disabled"}
-              disabled={!formFilled}
-            >
-              Login
-            </button>
-          </form>
+        {/* Login Section */}
+        <div className="login-section">
+          <div className="img-container-login">
+            <img src={uicLogo} alt="Uic logo" className="uic-logo" />
+          </div>
+          <div className="h1-container-login">
+            <h1>ADMINISTRATOR</h1>
+          </div>
+          <div className="form-container-login">
+            <form onSubmit={handleSubmit} onChange={handleFormChange}>
+              <label htmlFor="studentId" className="labelstdID">
+                Email
+              </label>
+              <br />
+              <input
+                type="text"
+                id="studentId"
+                placeholder="Enter your email here"
+                autoComplete="off"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br />
+              <label htmlFor="password" className="labelstdPWD">
+                Password
+              </label>
+              <br />
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password here"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span className="forgotPassword">
+                <Link to="/forgot-password">
+                  <span className="forgotpassButton">Forgot Password?</span>
+                </Link>
+              </span>
+
+              <br />
+              <button
+                className={formFilled ? "" : "disabled"}
+                disabled={!formFilled}
+              >
+                Login
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </>
