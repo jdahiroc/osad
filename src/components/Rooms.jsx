@@ -18,6 +18,10 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, Upload } from "antd";
+// import type { UploadFile } from 'antd';
+
 const Rooms = () => {
   const [profileIcons, setProfileIcon] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
@@ -26,17 +30,17 @@ const Rooms = () => {
   const [time, setTime] = useState("");
   const [attachments, setAttachments] = useState("");
   const [attachmentFileName, setAttachmentFileName] = useState("");
+  const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
-    const uploadFile = () => {
-      // const name = new Date().getTime() + attachments.name;
-    };
+    const uploadFile = () => {};
     attachments && uploadFile();
   }, [attachments]);
 
   // User Authentication
   const { user, logout } = UserAuth();
 
+  // navigate to new page
   const navigate = useNavigate();
 
   const toggleProfileModal = () => {
@@ -45,12 +49,10 @@ const Rooms = () => {
 
   // Disabled submit button if form !filled
   const handleFormChange = () => {
-    if (attachments) {
+    if (fileList) {
       setFormFilled(true);
-      setAttachmentFileName(attachments.name); // Set the filename
     } else {
       setFormFilled(false);
-      setAttachmentFileName("");
     }
   };
 
@@ -67,14 +69,15 @@ const Rooms = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     //converts the time format to 12hours
     const timeFormatted = new Date(date + "T" + time).toLocaleTimeString(
       "en-US",
       { hour: "numeric", minute: "numeric", hour12: true }
     );
 
-    const storageRef = ref(storage, attachments.name);
-
+    // Initialize the firebase storage
+    const storageRef = ref(storage, "folder_name/" + attachments.name); // specify a child reference here
     const uploadTask = uploadBytesResumable(storageRef, attachments);
 
     uploadTask.on(
@@ -84,7 +87,7 @@ const Rooms = () => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        alert("Upload is " + progress + "%");
+        console.log("Upload is " + progress + "%");
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -96,8 +99,8 @@ const Rooms = () => {
             break;
         }
       },
-      (e) => {
-        console.log(e);
+      (error) => {
+        console.log(error);
       },
       async () => {
         // Handle successful uploads on complete
@@ -122,8 +125,8 @@ const Rooms = () => {
           alert("Request Sent!"); // Alert that the request has been sent
 
           navigate("/home");
-        } catch (e) {
-          console.log(e.message);
+        } catch (error) {
+          console.log(error.message);
         }
       }
     );
@@ -271,19 +274,15 @@ const Rooms = () => {
           </div>
           <div className="attachment-container">
             <p>Attach Request Form:</p>
-            <input
-              type="file"
-              onChange={(e) => {
-                setAttachments(e.target.files[0]);
-              }}
-              id="uploadBtn"
-            />
-            <label className="uploadLabel" htmlFor="uploadBtn">
-              <img src={uploadIcon} alt="Upload Icon" />
-              Upload
-            </label>
+            <Upload
+              fileList={fileList}
+              onChange={({ fileList }) => setFileList(fileList)}
+              beforeUpload={() => false} // Prevent default upload behavior
+              maxCount={5} // Allow only five file to be uploaded
+            >
+              <Button icon={<UploadOutlined />}>Upload</Button>
+            </Upload>
             {attachmentFileName && <span>{attachmentFileName}</span>}
-            {/* Display the filename */}
           </div>
           <div className="bookingButtons-container">
             <div className="cancel-button">
