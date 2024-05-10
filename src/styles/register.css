@@ -5,7 +5,7 @@ Register.jsx
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 5em;
+  margin-top: 9em;
   height: 700px;
   width: auto;
 }
@@ -60,7 +60,7 @@ Register.jsx
 }
 
 .form-container-register label {
-  margin-top: 0.5em;
+  margin-top: 1em;
   margin-bottom: 0.5em;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
@@ -117,7 +117,6 @@ Register.jsx
   color: #fff;
   padding: 0.25rem;
   position: relative;
-  bottom: -10px;
 }
 
 .instructions > svg {
@@ -155,4 +154,15 @@ Register.jsx
 
 .line {
   display: inline-block;
+}
+
+.instructions_invalid-msg {
+  color: red;
+  background-color: rgba(180, 179, 179, 0.396);
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: -25px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

@@ -14,17 +14,35 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [formFilled, setFormFilled] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [confirmPasswordValid] = useState(false);
+  const [schoolIdValid, setSchoolIdValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
 
   const { createUser } = UserAuth();
   const navigate = useNavigate();
 
+  const validatePassword = (value) => {
+    return value.length >= 6;
+  };
+
+  const validateEmail = (value) => {
+    return /\S+@\S+\.\S+/.test(value) && value.endsWith("@uic.edu.ph");
+  };
+
+  const validateSchoolId = (value) => {
+    return /^\d+$/.test(value);
+  };
+
   const handleFormChange = () => {
     // Check if all form fields are filled
-    if (email && password && fullName && schoolId && confirmPassword) {
-      setFormFilled(true);
-    } else {
-      setFormFilled(false);
-    }
+    const isFilled =
+      email && password && fullName && schoolId && confirmPassword;
+    setFormFilled(isFilled);
+
+    setPasswordValid(validatePassword(password));
+    setSchoolIdValid(validateSchoolId(schoolId));
+    setEmailValid(validateEmail(email));
   };
 
   //------------------
@@ -33,6 +51,31 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrMsg("");
+
+    if (!formFilled) {
+      setErrMsg("Please fill in all fields.");
+      return;
+    }
+
+    if (!passwordValid) {
+      setErrMsg("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (!confirmPasswordValid) {
+      setErrMsg("Passwords do not match.");
+      return;
+    }
+
+    if (!schoolIdValid) {
+      setErrMsg("School ID should only contain numbers.");
+      return;
+    }
+
+    if (!emailValid) {
+      setErrMsg("Please enter a valid UIC email address.");
+      return;
+    }
 
     const newUser = {
       confirmPassword,
@@ -97,22 +140,30 @@ const Register = () => {
               type="text"
               id="schoolId"
               placeholder="Enter your ID here"
-              autoComplete="off"
               onChange={(e) => setSchoolId(e.target.value)}
               required
             />
+            {schoolId !== "" && !schoolIdValid && (
+              <p className="instructions_invalid-msg">
+                School ID should only contain numbers.
+              </p>
+            )}
             <br />
             {/* Email */}
-            <label htmlFor="schoolId">Email</label>
+            <label htmlFor="email">Email</label>
             <br />
             <input
               type="text"
               id="email"
               placeholder="Enter your email here"
-              autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            {!emailValid && (
+              <p className="instructions_invalid-msg">
+                Please enter a valid UIC email address.
+              </p>
+            )}
             <br />
             {/* Password */}
             <label htmlFor="password">Password:</label>
@@ -124,6 +175,11 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {!passwordValid && (
+              <p className="instructions_invalid-msg">
+                Password must be at least 6 characters long.
+              </p>
+            )}
             <br />
             {/* Confirm Password */}
             <label htmlFor="confirm_pwd">Confirm Password:</label>
