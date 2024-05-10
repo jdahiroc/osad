@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-// import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import uicLogo from "../assets/uic-logo.png";
 import verticalLine from "../assets/vertical-line.png";
@@ -10,23 +9,21 @@ import sidelineHeader from "../assets/sideline-firstfloor.png";
 import filterIcon from "../assets/filter-icon.png";
 import schoolBG from "../assets/school-bg.png";
 import { UserAuth } from "../context/AuthContext";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 // styles
 import "../styles/homepage.css";
 
 const Homepage = () => {
   const [modal, setModal] = useState(false);
-  // const [fullName, setFullName] = useState("");
   const [rooms, setRoom] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [profileIcons, setProfileIcon] = useState(false);
 
-  // Modal Function
   const toggleModal = () => {
     setModal(!modal);
   };
 
-  // Modal Function
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
@@ -34,8 +31,6 @@ const Homepage = () => {
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 
-  // Handles Booking Infos to pass data to Rooms.jsx
-  // from the clicked button
   const handleBookNow = () => {
     navigate("/rooms", {
       state: {
@@ -46,7 +41,6 @@ const Homepage = () => {
     });
   };
 
-  //logout function
   const handleLogout = async () => {
     try {
       await logout();
@@ -57,7 +51,6 @@ const Homepage = () => {
     }
   };
 
-  // Fetch the room data (READ Operation)
   const getRoom = async () => {
     const querySnapshot = await getDocs(collection(db, "mainCampus"));
     const roomsData = querySnapshot.docs.map((doc) => ({
@@ -68,13 +61,11 @@ const Homepage = () => {
   };
 
   useEffect(() => {
-    // getFullNameUser();
     getRoom();
   }, []);
 
   return (
     <>
-      {/* Navigation */}
       <div className="navigation">
         <div className="logo">
           <img src={uicLogo} alt="UIC Logo" />
@@ -90,9 +81,9 @@ const Homepage = () => {
               </Link>
             </li>
             <li>
-              <Link to="/rooms">
+              <ScrollLink to="rooms" smooth={true} duration={500}>
                 <span>ROOMS</span>
-              </Link>
+              </ScrollLink>
             </li>
             <li>
               <span onClick={toggleProfileModal}>
@@ -103,7 +94,6 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Profile Modal */}
       <div className={`overlay-profileIcon  ${profileIcons ? "show" : "hide"}`}>
         <div className="close-btn-container">
           <button onClick={toggleProfileModal} className="profile-closebtn">
@@ -128,13 +118,11 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* UIC IMAGE Banner */}
       <div className="wide-image">
         <img src={schoolBG} alt="School Background" loading="lazy" />
       </div>
 
       <div className="content-container">
-        {/* Campus Navigation Header */}
         <div className="campus-navigation-container">
           <div className="filter-icon">
             <a href="#">
@@ -147,9 +135,8 @@ const Homepage = () => {
           </div>
         </div>
 
-        {/* Second Floor */}
         <div className="second-floor-container">
-          <div className="second-floor-header">
+          <div id="rooms" className="second-floor-header">
             <img src={sidelineHeader} alt="Sideline Header" />
             <h3>SECOND FLOOR</h3>
           </div>
@@ -173,8 +160,6 @@ const Homepage = () => {
             )}
           </div>
         </div>
-
-        {/* Room Information Modal */}
 
         <div className={`overlay ${modal ? "show" : "hide"}`}>
           <span className="close" onClick={toggleModal}>

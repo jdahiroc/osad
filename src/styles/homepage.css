@@ -33,11 +33,14 @@
 
 .menu ul li span {
   color: #000000;
-  text-decoration: none;
   margin-top: 50px;
   font-weight: 600;
   font-family: "Inter", sans-serif;
   margin-left: 10px;
+}
+
+.menu ul li a {
+  text-decoration: none;
 }
 
 .menu ul li a:hover {
