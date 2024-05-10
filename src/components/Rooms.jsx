@@ -163,7 +163,7 @@ const Rooms = () => {
               </Link>
             </li>
             <li>
-              <span onClick={toggleProfileModal}>
+              <span className="profile-icon" onClick={toggleProfileModal}>
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
               </span>
             </li>

@@ -14,6 +14,7 @@
   width: 65px;
   height: auto;
   padding-left: 0px;
+  margin-left: 15px;
 }
 .line img {
   height: 55px;
@@ -47,6 +48,10 @@
 .profile-icon {
   width: 40px;
   height: 40px;
+}
+
+.profile-icon {
+  margin-right: 10px;
 }
 
 .wide-image {
@@ -110,7 +115,7 @@
   width: 90%;
   height: 3px;
   background-color: #fa7e93;
-  margin-top: 0.5em;
+  margin-top: 1em;
 }
 
 .room-info {
@@ -120,6 +125,7 @@
 .room-info h6 {
   margin-top: 1em;
   font-family: "DM Sans", sans-serif;
+  width: 380px;
   font-weight: 800;
   font-size: 20px;
 }
@@ -198,7 +204,7 @@ input[type="file"] {
 .bookerName-container {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 48%;
 }
 
 .bookerName-container h6 {
@@ -224,7 +230,7 @@ input[type="file"] {
 .attachment-container {
   position: absolute;
   left: 50%;
-  top: 67.2%;
+  top: 64%;
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -264,7 +270,11 @@ input[type="file"] {
 }
 
 .bookContent-container .bookingButtons-container .bookNow-button {
-  margin-top: 1.5em;
+  margin-top: 0.5em;
+}
+
+.bookContent-container .bookingButtons-container .cancel-button {
+  margin-top: 0.5em;
 }
 
 .bookContent-container .bookingButtons-container button:hover {

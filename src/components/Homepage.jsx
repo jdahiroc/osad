@@ -2,16 +2,20 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+
 import uicLogo from "../assets/uic-logo.png";
 import verticalLine from "../assets/vertical-line.png";
 import profileIcon from "../assets/profile-icon-admin2.png";
 import sidelineHeader from "../assets/sideline-firstfloor.png";
 import filterIcon from "../assets/filter-icon.png";
 import schoolBG from "../assets/school-bg.png";
+
 import { UserAuth } from "../context/AuthContext";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
-// styles
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 import "../styles/homepage.css";
 
 const Homepage = () => {
@@ -19,6 +23,7 @@ const Homepage = () => {
   const [rooms, setRoom] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [profileIcons, setProfileIcon] = useState(false);
+  const [loading, setLoading] = useState(true); // Added loading state
 
   const toggleModal = () => {
     setModal(!modal);
@@ -52,12 +57,17 @@ const Homepage = () => {
   };
 
   const getRoom = async () => {
-    const querySnapshot = await getDocs(collection(db, "mainCampus"));
-    const roomsData = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setRoom(roomsData);
+    try {
+      const querySnapshot = await getDocs(collection(db, "mainCampus"));
+      const roomsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRoom(roomsData);
+      setLoading(false); // Set loading to false when data is fetched
+    } catch (error) {
+      console.error("Error fetching room data:", error);
+    }
   };
 
   useEffect(() => {
@@ -86,7 +96,7 @@ const Homepage = () => {
               </ScrollLink>
             </li>
             <li>
-              <span onClick={toggleProfileModal}>
+              <span className="profile-icon" onClick={toggleProfileModal}>
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
               </span>
             </li>
@@ -141,7 +151,13 @@ const Homepage = () => {
             <h3>SECOND FLOOR</h3>
           </div>
           <div className="second-floor-buttons-container">
-            {rooms ? (
+            {loading ? (
+              <div className="loading">
+                <Box>
+                  <CircularProgress />
+                </Box>
+              </div>
+            ) : (
               rooms.map((room) => (
                 <div className="second-floor-button1" key={room.id}>
                   <button
@@ -155,8 +171,6 @@ const Homepage = () => {
                   </button>
                 </div>
               ))
-            ) : (
-              <h2>LOADING...</h2>
             )}
           </div>
         </div>
