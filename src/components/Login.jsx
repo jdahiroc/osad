@@ -1,5 +1,5 @@
 // Import React and necessary components
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { getDocs, collection, query, where } from "firebase/firestore";
@@ -7,6 +7,7 @@ import { db } from "../firebase";
 
 //Image
 import uicLogo from "../assets/logo.png";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 // CSS
 import "../styles/login.css";
@@ -21,6 +22,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [formFilled, setFormFilled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // New state variable
 
   const handleFormChange = () => {
     // Check if all form fields are filled
@@ -71,6 +73,11 @@ const Login = () => {
     }
   };
 
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <div className="background-container">
@@ -108,12 +115,19 @@ const Login = () => {
               </label>
               <br />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Enter your password here"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <span
+                className="show-password"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              </span>
               <span className="forgotPassword">
                 <Link to="/forgot-password">
                   <span className="forgotpassButton">Forgot Password?</span>
