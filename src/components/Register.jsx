@@ -28,7 +28,7 @@ const Register = () => {
   };
 
   const validateEmail = (value) => {
-    return /\S+@\S+\.\S+/.test(value) && value.endsWith("@uic.edu.ph");
+    return /\S+@\S+\.\S+/.test(value) && value.endsWith("@uic.edu.ph");   
   };
 
   const validateSchoolId = (value) => {
@@ -60,11 +60,6 @@ const Register = () => {
 
     if (!passwordValid) {
       setErrMsg("Password must be at least 6 characters long.");
-      return;
-    }
-
-    if (!confirmPasswordValid) {
-      setErrMsg("Passwords do not match.");
       return;
     }
 
