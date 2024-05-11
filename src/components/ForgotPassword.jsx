@@ -26,7 +26,7 @@ const ForgotPassword = () => {
       alert("Email has been sent. Please check your email!");
 
       // Navigate back to the login page after sending the link
-      navigate("/a/login");
+      navigate("/");
     } catch (error) {
       // Log the error for debugging
       console.error("Reset password error:", error);
