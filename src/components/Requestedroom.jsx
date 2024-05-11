@@ -29,6 +29,7 @@ import { db } from "../firebase";
 // API Email.js
 import emailjs from "@emailjs/browser";
 
+
 const Requestedroom = () => {
   // useStates
   const [data, setData] = useState([]);
@@ -53,6 +54,12 @@ const Requestedroom = () => {
     setProfileIcon(!profileIcons);
   };
 
+  // EMAIL JS service ID, template id, and public key
+  const serviceId = "service_zz8gtci";
+  const accepted_templateId = "template_3488qrh";
+  const declined_templateId = "template_n073bjz";
+  const publicKey = "oONSJXrvVPUi7wGTn";
+
   //Logout Function
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
@@ -71,83 +78,67 @@ const Requestedroom = () => {
   };
 
   // handle Accept Function
-  const handleAccept = async (id) => {
-    // Fetch the accepted item
-    const acceptedItem = data.find((item) => item.id === id);
+const handleAccept = async (id) => {
+  const acceptedItem = data.find((item) => item.id === id);
 
-    // EMAIL JS service ID, template id, and public key
-    const serviceId = "service_zz8gtci";
-    const accepted_templateId = "template_3488qrh";
-    const publicKey = "oONSJXrvVPUi7wGTn";
+  if (!acceptedItem) {
+    console.log("Accepted item not found");
+    return;
+  }
 
-    try {
-      // Object for email template
-      const templateParams = {
-        from_name: name,
-        from_email: email,
-        to_name: acceptedItem.email,
-        message: message,
-      };
+  try {
+    const templateParams = {
+      from_name: name,
+      from_email: acceptedItem.email,
+      to_email: acceptedItem.email, // Use the user's email directly
+      message: message,
+    };
 
-      // Update the status to "approved"
-      acceptedItem.status = "APPROVED";
+    acceptedItem.status = "APPROVED";
 
-      // Add the accepted item to the history collection
-      await addDoc(collection(db, "history"), acceptedItem);
-      await deleteDoc(doc(db, "requestedRoom", id));
+    await addDoc(collection(db, "history"), acceptedItem);
+    await deleteDoc(doc(db, "requestedRoom", id));
 
-      emailjs.send(serviceId, accepted_templateId, templateParams, publicKey);
-      setname("");
-      setEmail("");
-      setMessage("");
-      // notify if email was sent
-      alert("Book Request has sent to user!");
+    emailjs.send(serviceId, accepted_templateId, templateParams, publicKey);
+    setname("");
+    setEmail("");
+    setMessage("");
+    alert("Book Request has sent to user!");
 
-      // Remove the accepted item from the data state
-      setData(data.filter((item) => item.id !== id));
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    setData(data.filter((item) => item.id !== id));
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-  //handle Delete Function
-  const handleDelete = async (id) => {
-    // Fetch the accepted item
-    const declinedItem = data.find((item) => item.id === id);
+//handle Delete Function
+const handleDelete = async (id) => {
+  const declinedItem = data.find((item) => item.id === id);
 
-    // EMAIL JS service ID, template id, and public key
-    const serviceId = "service_zz8gtci";
-    const declined_templateId = "template_n073bjz";
-    const publicKey = "oONSJXrvVPUi7wGTn";
+  try {
+    const templateParams2 = {
+      from_name: name,
+      from_email: declinedItem.email,
+      to_email: declinedItem.email, // Use the user's email directly
+      message: message,
+    };
 
-    try {
-      // Object for email template
-      const templateParams2 = {
-        from_name: name,
-        from_email: email,
-        to_name: declinedItem.email,
-        message: message,
-      };
+    declinedItem.status = "DECLINED";
 
-      // Update the status to "approved"
-      declinedItem.status = "DECLINED";
+    await deleteDoc(doc(db, "requestedRoom", id));
+    await addDoc(collection(db, "history"), declinedItem);
 
-      await deleteDoc(doc(db, "requestedRoom", id));
-      // Add the accepted item to the history collection
-      await addDoc(collection(db, "history"), declinedItem);
+    emailjs.send(serviceId, declined_templateId, templateParams2, publicKey);
+    setname("");
+    setEmail("");
+    setMessage("");
+    alert("Book Request has sent to user!");
 
-      emailjs.send(serviceId, declined_templateId, templateParams2, publicKey);
-      setname("");
-      setEmail("");
-      setMessage("");
-      // notify if email was sent
-      alert("Book Request has sent to user!");
-
-      setData(data.filter((item) => item.id !== id));
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    setData(data.filter((item) => item.id !== id));
+  } catch (e) {
+    console.log(e);
+  }
+};
 
   //get the request real-time data from db
   const getRequestData = () => {
@@ -208,7 +199,7 @@ const Requestedroom = () => {
               </Link>
             </li>
             <li>
-              <span onClick={toggleProfileModal}>
+              <span className="profile-icon" onClick={toggleProfileModal}>
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
               </span>
             </li>
