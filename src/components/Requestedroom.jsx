@@ -10,6 +10,8 @@ import declineIcon from "../assets/Close.png";
 //CSS
 import "../styles/requestedroom.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 //User Authentication
 import { UserAuth } from "../context/AuthContext";
@@ -29,7 +31,6 @@ import { db } from "../firebase";
 // API Email.js
 import emailjs from "@emailjs/browser";
 
-
 const Requestedroom = () => {
   // useStates
   const [data, setData] = useState([]);
@@ -37,6 +38,17 @@ const Requestedroom = () => {
   const [email, setEmail] = useState();
   const [name, setname] = useState();
   const [message, setMessage] = useState();
+
+  // Alert state
+  const [alert, setAlert] = useState(null);
+
+  // Function to set and clear the alert with a timeout
+  const setTimedAlert = (alertComponent, timeout) => {
+    setAlert(alertComponent);
+    setTimeout(() => {
+      setAlert(null);
+    }, timeout);
+  };
 
   // loading state
   const [loading, setLoading] = useState(true);
@@ -78,67 +90,75 @@ const Requestedroom = () => {
   };
 
   // handle Accept Function
-const handleAccept = async (id) => {
-  const acceptedItem = data.find((item) => item.id === id);
+  const handleAccept = async (id) => {
+    const acceptedItem = data.find((item) => item.id === id);
 
-  if (!acceptedItem) {
-    console.log("Accepted item not found");
-    return;
-  }
+    try {
+      const templateParams = {
+        from_name: name,
+        from_email: email,
+        to_email: acceptedItem.email, // Use the user's email directly
+        message: message,
+      };
 
-  try {
-    const templateParams = {
-      from_name: name,
-      from_email: acceptedItem.email,
-      to_email: acceptedItem.email, // Use the user's email directly
-      message: message,
-    };
+      acceptedItem.status = "APPROVED";
 
-    acceptedItem.status = "APPROVED";
+      await addDoc(collection(db, "history"), acceptedItem);
+      await deleteDoc(doc(db, "requestedRoom", id));
 
-    await addDoc(collection(db, "history"), acceptedItem);
-    await deleteDoc(doc(db, "requestedRoom", id));
+      emailjs.send(serviceId, accepted_templateId, templateParams, publicKey);
+      setname("");
+      setEmail("");
+      setMessage("");
 
-    emailjs.send(serviceId, accepted_templateId, templateParams, publicKey);
-    setname("");
-    setEmail("");
-    setMessage("");
-    alert("Book Request has sent to user!");
+      // Set success alert
+      setTimedAlert(
+        <Alert variant="filled" severity="success">
+          Request Accepted.
+        </Alert>,
+        3000
+      );
 
-    setData(data.filter((item) => item.id !== id));
-  } catch (e) {
-    console.log(e);
-  }
-};
+      setData(data.filter((item) => item.id !== id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-//handle Delete Function
-const handleDelete = async (id) => {
-  const declinedItem = data.find((item) => item.id === id);
+  //handle Delete Function
+  const handleDelete = async (id) => {
+    const declinedItem = data.find((item) => item.id === id);
 
-  try {
-    const templateParams2 = {
-      from_name: name,
-      from_email: declinedItem.email,
-      to_email: declinedItem.email, // Use the user's email directly
-      message: message,
-    };
+    try {
+      const templateParams2 = {
+        from_name: name,
+        from_email: email,
+        to_email: declinedItem.email, // Use the user's email directly
+        message: message,
+      };
 
-    declinedItem.status = "DECLINED";
+      declinedItem.status = "DECLINED";
 
-    await deleteDoc(doc(db, "requestedRoom", id));
-    await addDoc(collection(db, "history"), declinedItem);
+      await deleteDoc(doc(db, "requestedRoom", id));
+      await addDoc(collection(db, "history"), declinedItem);
 
-    emailjs.send(serviceId, declined_templateId, templateParams2, publicKey);
-    setname("");
-    setEmail("");
-    setMessage("");
-    alert("Book Request has sent to user!");
+      emailjs.send(serviceId, declined_templateId, templateParams2, publicKey);
+      setname("");
+      setEmail("");
+      setMessage("");
+      // Set error alert
+      setTimedAlert(
+        <Alert variant="filled" severity="error">
+          Request Declined.
+        </Alert>,
+        3000
+      );
 
-    setData(data.filter((item) => item.id !== id));
-  } catch (e) {
-    console.log(e);
-  }
-};
+      setData(data.filter((item) => item.id !== id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   //get the request real-time data from db
   const getRequestData = () => {
@@ -178,6 +198,7 @@ const handleDelete = async (id) => {
 
   return (
     <>
+      <div className="alert-container">{alert}</div>
       {/* <!-- NAVIGATION --> */}
       <div className="navigation">
         <div className="logo">
