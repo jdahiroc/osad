@@ -215,11 +215,16 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.bookerName-container .user-email {
+  font-size: 18px;
+}
+
 .bookerName-container input {
   border: none;
   padding-left: 0.3em;
   font-weight: 400;
   font-size: 23px;
+  width: auto;
 }
 
 .bookerName-container input:disabled {

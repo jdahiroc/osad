@@ -262,12 +262,13 @@ const Rooms = () => {
                 disabled
               />
             </h6>
-            <h6>
+            <h6 className="user-email-container">
               Email:
               <input
                 id="email"
                 type="text"
                 defaultValue={user && user.email}
+                className="user-email"
                 disabled
               />
             </h6>
