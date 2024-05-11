@@ -18,9 +18,12 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Upload } from "antd";
-// import type { UploadFile } from 'antd';
+// Material UI
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
 
 const Rooms = () => {
   const [profileIcons, setProfileIcon] = useState(false);
@@ -29,8 +32,9 @@ const Rooms = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [attachments, setAttachments] = useState("");
-  const [attachmentFileName, setAttachmentFileName] = useState("");
-  const [fileList, setFileList] = useState([]);
+  const [attachmentFileName, setAttachmentFileName] = useState([]);
+
+  const [open, setOpen] = useState("");
 
   useEffect(() => {
     const uploadFile = () => {};
@@ -40,16 +44,25 @@ const Rooms = () => {
   // User Authentication
   const { user, logout } = UserAuth();
 
-  // navigate to new page
   const navigate = useNavigate();
 
   const toggleProfileModal = () => {
     setProfileIcon(!profileIcons);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/home"); // Navigate back to home after modal close
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   // Disabled submit button if form !filled
   const handleFormChange = () => {
-    if (fileList) {
+    // Check if all form fields are filled
+    if (attachments) {
       setFormFilled(true);
     } else {
       setFormFilled(false);
@@ -69,15 +82,13 @@ const Rooms = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     //converts the time format to 12hours
     const timeFormatted = new Date(date + "T" + time).toLocaleTimeString(
       "en-US",
       { hour: "numeric", minute: "numeric", hour12: true }
     );
 
-    // Initialize the firebase storage
-    const storageRef = ref(storage, "folder_name/" + attachments.name); // specify a child reference here
+    const storageRef = ref(storage, attachments.name);
     const uploadTask = uploadBytesResumable(storageRef, attachments);
 
     uploadTask.on(
@@ -99,8 +110,8 @@ const Rooms = () => {
             break;
         }
       },
-      (error) => {
-        console.log(error);
+      (e) => {
+        console.log(e);
       },
       async () => {
         // Handle successful uploads on complete
@@ -122,11 +133,9 @@ const Rooms = () => {
         try {
           // Save the document to Firestore
           await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
-          alert("Request Sent!"); // Alert that the request has been sent
-
           navigate("/home");
-        } catch (error) {
-          console.log(error.message);
+        } catch (e) {
+          console.log(e.message);
         }
       }
     );
@@ -163,7 +172,7 @@ const Rooms = () => {
               </Link>
             </li>
             <li>
-              <span className="profile-icon" onClick={toggleProfileModal}>
+              <span onClick={toggleProfileModal}>
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
               </span>
             </li>
@@ -262,27 +271,30 @@ const Rooms = () => {
                 disabled
               />
             </h6>
-            <h6 className="user-email-container">
+            <h6>
               Email:
               <input
                 id="email"
                 type="text"
                 defaultValue={user && user.email}
-                className="user-email"
                 disabled
               />
             </h6>
           </div>
           <div className="attachment-container">
             <p>Attach Request Form:</p>
-            <Upload
-              fileList={fileList}
-              onChange={({ fileList }) => setFileList(fileList)}
-              beforeUpload={() => false} // Prevent default upload behavior
-              maxCount={5} // Allow only five file to be uploaded
-            >
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
+            <input
+              type="file"
+              onChange={(e) => {
+                setAttachments(e.target.files[0]);
+                setAttachmentFileName(e.target.files[0].name); // Set the file name
+              }}
+              id="uploadBtn"
+            />
+            <label className="uploadLabel" htmlFor="uploadBtn">
+              <img src={uploadIcon} alt="Upload Icon" />
+              Upload
+            </label>
             {attachmentFileName && <span>{attachmentFileName}</span>}
           </div>
           <div className="bookingButtons-container">
@@ -295,12 +307,44 @@ const Rooms = () => {
               <button
                 className={formFilled ? "" : "disabled"}
                 disabled={!formFilled}
+                onClick={handleOpen}
               >
                 BOOK NOW
               </button>
             </div>
           </div>
         </form>
+      </div>
+
+      {/* MODAL */}
+      <div>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box
+              className="modal-alert-accepted"
+              height={150}
+              width={400}
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-end"
+              p={3}
+            >
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Your request has been sent! Wait for the confirmation!
+              </Typography>
+              <Button onClick={handleClose}>OK</Button>
+            </Box>
+          </Modal>
+        </Backdrop>
       </div>
     </>
   );
