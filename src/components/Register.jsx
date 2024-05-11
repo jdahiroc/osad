@@ -13,6 +13,7 @@ const Register = () => {
   const [schoolId, setSchoolId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  
   const [formFilled, setFormFilled] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [confirmPasswordValid] = useState(false);
