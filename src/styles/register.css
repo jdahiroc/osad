@@ -166,3 +166,15 @@ Register.jsx
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.background-container-register {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-image: url('../assets/uic-school-bg.png');
+  background-size: cover;
+  background-position: center;
+}

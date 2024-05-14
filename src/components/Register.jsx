@@ -4,6 +4,7 @@ import { UserAuth } from "../context/AuthContext";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import uicLogo from "../assets/logo.png";
+import uicSchoolBg from "../assets/uic-school-bg.png";
 import "../styles/register.css";
 
 const Register = () => {
@@ -102,110 +103,115 @@ const Register = () => {
 
   return (
     <>
-      <div className="register-section">
-        <div className="img-container-login">
-          <img src={uicLogo} alt="Uic logo" className="uic-logo" />
-        </div>
-        <div className="h1-container-signup">
-          <h1>SIGN UP</h1>
-        </div>
-        <div className="error-container-register">
-          {/* error message */}
-          <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-            {errMsg}
-          </p>
-        </div>
-
-        <div className="form-container-register">
-          <form onSubmit={handleSubmit} onChange={handleFormChange}>
-            {/* Full Name */}
-            <label htmlFor="fullname">Full Name</label>
-            <br />
-            <input
-              type="text"
-              id="fullname"
-              placeholder="Enter your full name here"
-              autoComplete="off"
-              onChange={(e) => setFullName(e.target.value)}
-              required
-            />
-            <br />
-            {/* School ID */}
-            <label htmlFor="schoolId">School ID</label> <br />
-            <input
-              type="text"
-              id="schoolId"
-              placeholder="Enter your ID here"
-              onChange={(e) => setSchoolId(e.target.value)}
-              required
-            />
-            {schoolId !== "" && !schoolIdValid && (
-              <p className="instructions_invalid-msg">
-                School ID should only contain numbers.
-              </p>
-            )}
-            <br />
-            {/* Email */}
-            <label htmlFor="email">Email</label>
-            <br />
-            <input
-              type="text"
-              id="email"
-              placeholder="Enter your email here"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            {!emailValid && (
-              <p className="instructions_invalid-msg">
-                Please enter a valid UIC email address.
-              </p>
-            )}
-            <br />
-            {/* Password */}
-            <label htmlFor="password">Password:</label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password here"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            {!passwordValid && (
-              <p className="instructions_invalid-msg">
-                Password must be at least 6 characters long.
-              </p>
-            )}
-            <br />
-            {/* Confirm Password */}
-            <label htmlFor="confirm_pwd">Confirm Password:</label>
-            <br />
-            <input
-              type="password"
-              id="confirm_password"
-              placeholder="Enter your confirm password here"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-            <p className="login-container">
-              Already have an account?
-              <br />
-              <span className="line">
-                {/* put router link here */}
-                <Link to="/"> Login</Link>
-              </span>
+      {/* Background container with background image */}
+      <div className="background-container-register">
+        {/* Your existing JSX code... */}
+        <div className="register-section">
+          <div className="img-container-login">
+            <img src={uicLogo} alt="Uic logo" className="uic-logo" />
+          </div>
+          <div className="h1-container-signup">
+            <h1>SIGN UP</h1>
+          </div>
+          <div className="error-container-register">
+            {/* error message */}
+            <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+              {errMsg}
             </p>
-            <button
-              className={formFilled ? "" : "disabled"}
-              disabled={!formFilled}
-            >
-              Sign up
-            </button>
-          </form>
+          </div>
+  
+          <div className="form-container-register">
+            <form onSubmit={handleSubmit} onChange={handleFormChange}>
+              {/* Full Name */}
+              <label htmlFor="fullname">Full Name</label>
+              <br />
+              <input
+                type="text"
+                id="fullname"
+                placeholder="Enter your full name here"
+                autoComplete="off"
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+              <br />
+              {/* School ID */}
+              <label htmlFor="schoolId">School ID</label> <br />
+              <input
+                type="text"
+                id="schoolId"
+                placeholder="Enter your ID here"
+                onChange={(e) => setSchoolId(e.target.value)}
+                required
+              />
+              {schoolId !== "" && !schoolIdValid && (
+                <p className="instructions_invalid-msg">
+                  School ID should only contain numbers.
+                </p>
+              )}
+              <br />
+              {/* Email */}
+              <label htmlFor="email">Email</label>
+              <br />
+              <input
+                type="text"
+                id="email"
+                placeholder="Enter your email here"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {!emailValid && (
+                <p className="instructions_invalid-msg">
+                  Please enter a valid UIC email address.
+                </p>
+              )}
+              <br />
+              {/* Password */}
+              <label htmlFor="password">Password:</label>
+              <br />
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password here"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              {!passwordValid && (
+                <p className="instructions_invalid-msg">
+                  Password must be at least 6 characters long.
+                </p>
+              )}
+              <br />
+              {/* Confirm Password */}
+              <label htmlFor="confirm_pwd">Confirm Password:</label>
+              <br />
+              <input
+                type="password"
+                id="confirm_password"
+                placeholder="Enter your confirm password here"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <p className="login-container">
+                Already have an account?
+                <br />
+                <span className="line">
+                  {/* put router link here */}
+                  <Link to="/"> Login</Link>
+                </span>
+              </p>
+              <button
+                className={formFilled ? "" : "disabled"}
+                disabled={!formFilled}
+              >
+                Sign up
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </>
   );
+  
 };
 
 export default Register;
