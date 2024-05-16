@@ -12,6 +12,15 @@
   justify-content: flex-end;
 }
 
+.close {
+  display: flex;
+  justify-content: flex-end;
+  width: 700px;
+  font-size: 35px;
+  margin-top: 2px;
+  margin-left: 50px;
+}
+
 /*---------- Navigation ----------*/
 .navigation {
   display: flex;
