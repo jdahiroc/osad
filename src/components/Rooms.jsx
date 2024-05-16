@@ -11,7 +11,7 @@ import "../styles/rooms.css";
 //User Authentication
 import { UserAuth } from "../context/AuthContext";
 
-// Reach Hooks
+// React Hooks
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
@@ -30,7 +30,8 @@ const Rooms = () => {
   const [formFilled, setFormFilled] = useState(false);
 
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [attachments, setAttachments] = useState("");
   const [attachmentFileName, setAttachmentFileName] = useState([]);
 
@@ -82,23 +83,23 @@ const Rooms = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //converts the time format to 12hours
-    const timeFormatted = new Date(date + "T" + time).toLocaleTimeString(
-      "en-US",
-      { hour: "numeric", minute: "numeric", hour12: true }
-    );
+  
+    // Check if all required fields are filled
+    if (!date || !startTime || !endTime || !attachments) {
+      console.log("Please fill in all required fields");
+      return;
+    }
 
+  
     const storageRef = ref(storage, attachments.name);
     const uploadTask = uploadBytesResumable(storageRef, attachments);
-
+  
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "%");
+        console.log("Upload is " + progress + "% done");
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -114,24 +115,22 @@ const Rooms = () => {
         console.log(e);
       },
       async () => {
-        // Handle successful uploads on complete
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-        // Construct the request object with download URL
+  
         const newRequest = {
           roomName: roomName,
           roomType: roomType,
           email: email,
           userName: userName,
           date: date,
-          time: timeFormatted,
+          startTime: startTime,
+          endTime: endTime,
           attachments: downloadURL,
           requestedOn: serverTimestamp(),
           status: "PENDING",
         };
-
+  
         try {
-          // Save the document to Firestore
           await setDoc(doc(db, "requestedRoom", user.uid), newRequest);
           navigate("/home");
         } catch (e) {
@@ -141,13 +140,32 @@ const Rooms = () => {
     );
   };
 
-  // Get the selected roomName, roomType from Homepage.jsx
+
   const location = useLocation();
   const { selectedRoom, roomType, roomName } = location.state || {};
 
-  // Get user data from authentication context
   const email = user ? user.email : "";
   const userName = user ? user.displayName : "";
+
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const time = new Date(0, 0, 0, hour, minute).toLocaleTimeString(
+          "en-US",
+          {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }
+        );
+        times.push(time);
+      }
+    }
+    return times;
+  };
+
+  const timeOptions = generateTimeOptions();
 
   return (
     <>
@@ -252,14 +270,41 @@ const Rooms = () => {
                 name="date"
                 onChange={(e) => setDate(e.target.value)}
               />
-              <input
-                id="date"
-                type="time"
-                name="time"
-                onChange={(e) => setTime(e.target.value)}
-              />
+              <div className="selectStartTime-container">
+                <label className="starttime-text">Start Time:</label>
+                <select
+                  id="startTime"
+                  name="startTime"
+                  onChange={(e) => setStartTime(e.target.value)}
+                  value={startTime}
+                >
+                  <option value="">Select Start Time</option>
+                  {timeOptions.map((time, index) => (
+                    <option key={index} value={time}>
+                      {time}
+                    </option>
+                  ))}
+                </select>
+                <div className="selectEndTime-container">
+                  <label className="endtime-text">End Time:</label>
+                  <select
+                    id="endTime"
+                    name="endTime"
+                    onChange={(e) => setEndTime(e.target.value)}
+                    value={endTime}
+                  >
+                    <option value="">Select End Time</option>
+                    {timeOptions.map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
+
           {/* right section */}
           <div className="bookerName-container">
             <h6>
@@ -267,6 +312,7 @@ const Rooms = () => {
               <input
                 id="userName"
                 type="text"
+                className="text-ellipsis"
                 defaultValue={user && user.displayName}
                 disabled
               />
@@ -276,6 +322,7 @@ const Rooms = () => {
               <input
                 id="email"
                 type="text"
+                className="text-ellipsis"
                 defaultValue={user && user.email}
                 disabled
               />
@@ -339,7 +386,7 @@ const Rooms = () => {
               p={3}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Your request has been sent! Wait for the confirmation!
+                Your email has been sent! Wait for approval!
               </Typography>
               <Button onClick={handleClose}>OK</Button>
             </Box>
