@@ -6,8 +6,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
-  background-color: #3D3D3D;
-  color: #FFFFFF;
+  background-color: #3d3d3d;
+  color: #ffffff;
   box-shadow: 24px;
   padding: 10px;
 }
@@ -154,6 +154,7 @@ input[type="file"] {
   display: none;
 }
 
+
 .uploadLabel {
   display: flex;
   justify-content: center;
@@ -198,10 +199,58 @@ input[type="file"] {
 }
 
 .dateAndTime-container .selectDateAndTime-container {
-  height: 100px;
+  height: 150px;
   max-width: 380px;
   width: auto;
   margin-bottom: 1.5em;
+}
+
+.dateAndTime-container .selectDateAndTime-container .selectStartTime-container {
+  display: inline-flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 1.5em;
+}
+
+.dateAndTime-container
+  .selectDateAndTime-container
+  .selectStartTime-container
+  select {
+  margin-left: 10px;
+  width: 180px;
+  padding: 5px 5px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.dateAndTime-container
+  .selectDateAndTime-container
+  .selectStartTime-container
+  label {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 900; 
+  }
+
+.dateAndTime-container .selectDateAndTime-container .selectEndTime-container {
+  display: inline-flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.dateAndTime-container
+  .selectDateAndTime-container
+  .selectEndTime-container
+  select {
+  margin-left: 20px;
+  width: 180px;
+  padding: 5px 5px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  border-radius: 5px;
 }
 
 .dateAndTime-container .selectDateAndTime-container input {
@@ -217,6 +266,7 @@ input[type="file"] {
   position: absolute;
   left: 50%;
   top: 48%;
+  width: 500px;
 }
 
 .bookerName-container h6 {
@@ -229,6 +279,12 @@ input[type="file"] {
 
 .bookerName-container .user-email {
   font-size: 18px;
+}
+
+input[type="text"] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bookerName-container input {
