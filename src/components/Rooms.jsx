@@ -386,7 +386,7 @@ const Rooms = () => {
               p={3}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Your email has been sent! Wait for approval!
+                Your request has been sent! Wait for approval!
               </Typography>
               <Button onClick={handleClose}>OK</Button>
             </Box>
