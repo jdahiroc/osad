@@ -167,9 +167,9 @@ const History = () => {
         <thead>
           <tr>
             <th>Date</th>
-            <th>Time</th>
+            <th>Start Time</th>
+            <th>End Time</th>
             <th>Room Name</th>
-            <th>Name</th>
             <th>Email</th>
             <th>Status</th>
           </tr>
@@ -188,9 +188,9 @@ const History = () => {
             historyData.map((item) => (
               <tr key={item.id}>
                 <td>{item.date}</td>
-                <td>{item.time}</td>
+                <td>{item.startTime}</td>
+                <td>{item.endTime}</td>
                 <td>{item.roomName}</td>
-                <td>{item.userName}</td>
                 <td>{item.email}</td>
                 <td>{item.status}</td>
                 <td>
@@ -230,7 +230,10 @@ const History = () => {
                     <strong>Date: </strong> {selectedItem.date}
                   </p>
                   <p>
-                    <strong>Time: </strong> {selectedItem.time}
+                    <strong>Time: </strong> {selectedItem.startTime}
+                  </p>
+                  <p>
+                    <strong>Time: </strong> {selectedItem.endTime}
                   </p>
                 </div>
                 <div className="right-column">
