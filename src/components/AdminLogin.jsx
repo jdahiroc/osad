@@ -6,6 +6,7 @@ import { db } from "../firebase";
 
 // uic logo
 import uicLogo from "../assets/logo.png";
+import { FaSpinner } from "react-icons/fa";
 
 // Styles
 import "../styles/adminLogin.css";
@@ -19,6 +20,8 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [formFilled, setFormFilled] = useState(false);
 
+  const [loading, setLoading] = useState(false); // Loading state
+
   const handleFormChange = () => {
     // Check if all form fields are filled
     if (email && password) {
@@ -30,6 +33,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true
     setErrMsg(""); // Clear any previous error messages
     try {
       // Sign in the user
@@ -45,6 +49,8 @@ const Login = () => {
     } catch (error) {
       console.error("Error signing in:", error); // Log the error for debugging
       setErrMsg("Failed to sign in. Please try again.");
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -121,9 +127,9 @@ const Login = () => {
               <br />
               <button
                 className={formFilled ? "" : "disabled"}
-                disabled={!formFilled}
+                disabled={!formFilled || loading} // Disable button during loading
               >
-                Login
+                {loading && <FaSpinner className="spinner-icon" />} Login
               </button>
             </form>
           </div>
