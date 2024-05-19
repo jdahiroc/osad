@@ -5,9 +5,10 @@ import { UserAuth } from "../context/AuthContext";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 
-//Image
+// Import icons
 import uicLogo from "../assets/logo.png";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { FaSpinner } from "react-icons/fa";
 
 // CSS
 import "../styles/login.css";
@@ -22,7 +23,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [formFilled, setFormFilled] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // New state variable
+  const [showPassword, setShowPassword] = useState(false); 
+
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleFormChange = () => {
     // Check if all form fields are filled
@@ -36,6 +39,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrMsg("");
+    setLoading(true); // Set loading state to true
     try {
       // Sign in the user
       await signIn(email, password);
@@ -50,6 +54,8 @@ const Login = () => {
     } catch (error) {
       console.log(error.message);
       setErrMsg("Invalid User Credentials. Please try again!");
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -81,13 +87,13 @@ const Login = () => {
   return (
     <>
       <div className="background-container">
-        {/* Your login content */}
         <div className="error-container-login">
           {/* Error message */}
           <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
             {errMsg}
           </p>
         </div>
+        {/* Your login content */}
         {/* Login Section */}
         <div className="login-section">
           <div className="img-container-login">
@@ -106,7 +112,6 @@ const Login = () => {
                 type="text"
                 id="studentId"
                 placeholder="Enter your email here"
-                autoComplete="off"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <br />
@@ -136,9 +141,9 @@ const Login = () => {
               <br />
               <button
                 className={formFilled ? "" : "disabled"}
-                disabled={!formFilled}
+                disabled={!formFilled || loading} // Disable button during loading
               >
-                Login
+                {loading && <FaSpinner className="spinner-icon" />} Login
               </button>
             </form>
           </div>

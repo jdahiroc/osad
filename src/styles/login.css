@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* for show password */
 .show-password {
   margin-left: 0.5em;
   cursor: pointer;
@@ -14,11 +15,9 @@
   background-color: #ed008c;
   height: 100vh;
   width: 250px;
-  position: fixed;
-  left: 0; /* Initially positioned at the left edge of the screen */
+  position: absolute;
+  left: 0; 
   top: 0;
-  transition: transform 0.3s ease; /* Add transition for smooth animation */
-  transform: translateX(-100%); /* Move sidebar off-screen to the left */
 }
 .close-errMsg.close-button {
   background: none;
@@ -134,6 +133,21 @@
   font-size: 20px;
   font-style: normal;
   font-variation-settings: "slnt" 0;
+}
+
+/* For Loading */
+.spinner-icon {
+  margin-right: 1px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .form-container-login button:disabled {
