@@ -23,7 +23,7 @@ const ForgotPassword = () => {
       await sendPasswordResetEmail(auth, email);
 
       // Notify the user that the email has been sent
-      alert("Email has been sent. Please check your email!");
+      alert("Password Reset link has been sent. Please check your email!");
 
       // Navigate back to the login page after sending the link
       navigate("/");
