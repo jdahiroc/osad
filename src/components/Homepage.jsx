@@ -56,6 +56,7 @@ const Homepage = () => {
     }
   };
 
+  // read room floors real-time
   const getRoom = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "mainCampus"));
